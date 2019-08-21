@@ -8,16 +8,11 @@ from rest_framework.response import Response
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
 from myspace import settings
-from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer, UserAvatarSerializer
+from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer
 from utils.dingxing import DingXing
-from .models import VerifyCode, UserAvatar
-from utils.weibo_login import WeiBoOauth
-from utils.qq_login import QQOauth
-from utils.github_login import GitHubOauth
+from .models import VerifyCode
 
 User = get_user_model()
 
