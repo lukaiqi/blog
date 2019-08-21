@@ -39,7 +39,7 @@ class DanmuView(APIView):
 
     def get(self, request):
         dm = Danmu()
-        keyword = request.query_params.get('nn')
+        keyword = request.query_params.get('keyword')
         searchtype = request.query_params.get('type')
         if searchtype == '1':
             # 昵称精确匹配
