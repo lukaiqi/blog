@@ -1,3 +1,4 @@
+backports.csv==1.0.7
 certifi==2018.11.29
 chardet==3.0.4
 coreapi==2.3.3
@@ -30,10 +31,12 @@ odfpy==1.4.0
 openpyxl==2.6.0
 Pillow==5.4.1
 PyJWT==1.7.1
+PyMySQL==0.9.3
 pytz==2018.9
 PyYAML==3.13
 requests==2.21.0
 six==1.10.0
+sqlparse==0.3.0
 tablib==0.12.1
 unicodecsv==0.14.1
 uritemplate==3.0.0
