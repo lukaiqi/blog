@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework.validators import UniqueValidator
-from .models import VerifyCode, UserAvatar
+from .models import VerifyCode
 
 User = get_user_model()
 
@@ -87,15 +87,15 @@ class UserRegSerializer(serializers.ModelSerializer):
         fields = ('username', 'code', 'mobile', 'password')
 
 
-class UserAvatarSerializer(serializers.ModelSerializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
-    class Meta:
-        model = UserAvatar
-        fields = ('user', 'avatar')
 
 # class OAuthSerializer(serializers.ModelSerializer):
 #     oauthtoken = serializers.CharField(required=True, allow_blank=False, allow_null=False)
+#     password = serializers.CharField(style={'input_type': 'password'}, label='密码', write_only=True)
+    # def create(self, validated_data):
+    #     user = super(UserRegSerializer, self).create(validated_data=validated_data)
+    #     user.set_password(validated_data['password'])
+    #     user.save()
+    #     return user
 #
 #     def validate(self, attrs):
 #         attrs['name'] = attrs['username']

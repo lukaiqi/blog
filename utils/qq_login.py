@@ -6,9 +6,9 @@ import requests
 
 class QQOauth(object):
     def __init__(self):
-        self.appid = '101560855'
-        self.client_secret= '18604ff6df29decc9d0f1b3b60e56c16'
-        self.redirect_uri = 'http://vue.lkqblog.cn/user/oauth?type=qq'
+        self.appid = '101772638'
+        self.client_secret= '0f138d861e33982754deb1882880133a'
+        self.redirect_uri = 'https://ishuangsheng.cn/#/qq/bind'
 
     def get_auth_url(self):
         qq_auth_url = 'https://graph.qq.com/oauth2.0/authorize'

@@ -42,14 +42,3 @@ class VerifyCode(models.Model):
         return self.code
 
 
-class UserAvatar(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name='用户')
-    avatar = models.ImageField(upload_to='avatar/', default='', verbose_name='头像')
-    add_time = models.DateTimeField(default=datetime.now, verbose_name='上传时间')
-
-    class Meta:
-        verbose_name = '用户头像'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.avatar

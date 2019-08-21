@@ -90,12 +90,6 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
         return self.request.user
 
 
-class UseravatarViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
-    serializer_class = UserAvatarSerializer
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
-
-
 # class OauthBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 #     """
 #     绑定用户
@@ -195,18 +189,19 @@ class UseravatarViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 #         access_token = qq.get_access_token(code)
 #         openid = qq.get_open_id(access_token)
 #         userinfo = qq.get_user_info(access_token, openid)
-#         try:
-#             user = User.objects.get(oauthtoken=openid)
+#         user = User.objects.filter(oauthtoken=openid)
+#         if user:
 #             payload = jwt_payload_handler(user)
 #             token = jwt_encode_handler(payload)
 #             return Response({
-#                 'userid': user.id,
+#                 'user': user,
 #                 'token': token,
-#                 'name': user.name if user.name else user.username,
-#                 'status': '1'
+#                 'code': '1'
 #             })
-#         except Exception as e:
-#             return Response({'userinfo': userinfo, 'status': '0', 'openid': openid})
+#         else:
+#             return Response({'userinfo': userinfo, 'code': '0', 'openid': openid})
+#
+
 #
 #
 # class GitHubInfo(APIView):
