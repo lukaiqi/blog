@@ -38,22 +38,20 @@ class DanmuView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        global res
         dm = Danmu()
         keyword = request.query_params.get('nn')
         searchtype = request.query_params.get('type')
         if searchtype == '1':
             # 昵称精确匹配
             res = dm.matchnn(keyword)
-            # return Response(res)
+            return Response({'result': res})
         elif searchtype == '2':
             # 昵称搜索
             res = dm.searchnn(keyword)
-            # return Response(res)
+            return Response({'result': res})
         elif searchtype == '3':
             # 弹幕搜索
             res = dm.searchtxt(keyword)
-            # return Response(res)
+            return Response({'result': res})
         else:
-            pass
-        return Response(res)
+            return Response({'result': '查无结果'})
