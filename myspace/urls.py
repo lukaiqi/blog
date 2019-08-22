@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet
-from users.views import UserViewSet, SMSCodeViewSet, QqLogin, QQInfo
+from users.views import UserViewSet, SMSCodeViewSet, QqLogin, QQInfo,QQBindViewSet
 from homepic.views import HomePicViewSet, DanmuView
 from comment.views import CommentViewSet
 
@@ -30,7 +30,8 @@ router.register('artical', ArticleListViewSet, base_name='artical'),
 router.register('send_code', SMSCodeViewSet, base_name='send_code'),
 router.register('user', UserViewSet, base_name='user'),
 router.register('homepic', HomePicViewSet, base_name='homepic'),
-router.register('comment', CommentViewSet, base_name='comment')
+router.register('comment', CommentViewSet, base_name='comment'),
+router.register('qqbind', QQBindViewSet, base_name='qqbind'),
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),

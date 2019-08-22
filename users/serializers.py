@@ -88,19 +88,20 @@ class UserRegSerializer(serializers.ModelSerializer):
 
 
 class OAuthSerializer(serializers.ModelSerializer):
-    oauthtoken = serializers.CharField(required=True, allow_blank=False, allow_null=False)
+    openid = serializers.CharField(required=True, allow_blank=False, allow_null=False)
+    # 密码,write_only表示只写，不返回
     password = serializers.CharField(style={'input_type': 'password'}, label='密码', write_only=True)
 
     def create(self, validated_data):
-        user = super(UserRegSerializer, self).create(validated_data=validated_data)
+        user = super(OAuthSerializer, self).create(validated_data=validated_data)
         user.set_password(validated_data['password'])
         user.save()
         return user
 
     def validate(self, attrs):
-        attrs['name'] = attrs['username']
+        attrs['nickname'] = attrs['username']
         return attrs
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'oauthtoken')
+        fields = ('username', 'password', 'openid')

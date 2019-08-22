@@ -89,7 +89,7 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
         return self.request.user
 
 
-class OauthBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class QQBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
     绑定用户
     """
@@ -100,15 +100,10 @@ class OauthBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = self.perform_create(serializer)
-
-        re_dict = {}
         payload = jwt_payload_handler(user)
-        re_dict["token"] = jwt_encode_handler(payload)
-        re_dict["name"] = user.name if user.name else user.username
-        re_dict['userid'] = user.id
-
+        token = jwt_encode_handler(payload)
         headers = self.get_success_headers(serializer.data)
-        return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
+        return Response({'token': token}, status=status.HTTP_201_CREATED, headers=headers)
 
     def get_object(self):
         return self.request.user
@@ -117,70 +112,17 @@ class OauthBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         return serializer.save()
 
 
-#
-#
-# class WeiboLogin(APIView):
-#     """
-#     返回授权地址
-#     """
-#
-#     def get(self, request):
-#         weibo = WeiBoOauth()
-#         auth_url = weibo.get_auth_url()
-#         return Response(auth_url)
-#
-#
 class QqLogin(APIView):
     """
     返回授权地址
     """
 
-    def get(self,request):
+    def get(self, request):
         qq = QQOauth()
         auth_url = qq.get_auth_url()
         return Response(auth_url)
 
 
-#
-#
-# class GitHubLogin(APIView):
-#     """
-#     返回授权地址
-#     """
-#
-#     def get(self, request):
-#         github = GitHubOauth()
-#         auth_url = github.get_auth_url()
-#         return Response(auth_url)
-#
-#
-# class WeiboInfo(APIView):
-#     """
-#     获取用户信息
-#     """
-#
-#     def get(self, request):
-#         weibo = WeiBoOauth()
-#         code = request.query_params.get('code')
-#         res = weibo.get_access_token(code)
-#         res_dict = json.loads(res)
-#         access_token = res_dict['access_token']
-#         uid = res_dict['uid']
-#         userinfo = weibo.get_user_info(access_token, uid)
-#         try:
-#             user = User.objects.get(oauthtoken=uid)
-#             payload = jwt_payload_handler(user)
-#             token = jwt_encode_handler(payload)
-#             return Response({
-#                 'userid': user.id,
-#                 'token': token,
-#                 'name': user.name if user.name else user.username,
-#                 'status': '1',
-#             })
-#         except Exception as e:
-#             return Response({'userinfo': userinfo, 'status': '0'})
-#
-#
 class QQInfo(APIView):
     """
     获取用户信息
@@ -192,7 +134,7 @@ class QQInfo(APIView):
         access_token = qq.get_access_token(code)
         openid = qq.get_open_id(access_token)
         userinfo = qq.get_user_info(access_token, openid)
-        user = User.objects.filter(oauthtoken=openid)
+        user = User.objects.filter(openid=openid)
         if user:
             payload = jwt_payload_handler(user)
             token = jwt_encode_handler(payload)
@@ -203,38 +145,6 @@ class QQInfo(APIView):
             })
         else:
             return Response({'userinfo': userinfo, 'code': '0', 'openid': openid})
-
-
-#
-
-#
-#
-# class GitHubInfo(APIView):
-#     """
-#     获取用户信息
-#     """
-#
-#     def get(self, request):
-#         github = GitHubOauth()
-#         code = request.query_params.get('code')
-#         res = github.get_access_token(code)
-#         res_dict = json.loads(res)
-#         access_token = res_dict['access_token']
-#         userinfo = github.get_user_info(access_token)
-#         id_dict = json.loads(userinfo)
-#         id = id_dict['id']
-#         try:
-#             user = User.objects.get(oauthtoken=id)
-#             payload = jwt_payload_handler(user)
-#             token = jwt_encode_handler(payload)
-#             return Response({
-#                 'userid': user.id,
-#                 'token': token,
-#                 'name': user.name if user.name else user.username,
-#                 'status': '1',
-#             })
-#         except Exception as e:
-#             return Response({'userinfo': userinfo, 'status': '0'})
 
 
 def jwt_response_payload_handler(token, user=None, request=None):

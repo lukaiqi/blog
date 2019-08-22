@@ -7,9 +7,10 @@ import requests
 class QQOauth(object):
     def __init__(self):
         self.appid = '101772638'
-        self.client_secret= '0f138d861e33982754deb1882880133a'
-        self.redirect_uri = 'https://ishuangsheng.cn/#/qq/bind'
+        self.client_secret = '0f138d861e33982754deb1882880133a'
+        self.redirect_uri = 'https://ishuangsheng.cn/qq/bind'
         # self.redirect_uri = 'http://127.0.0.1:8080/#/qq/bind'
+
     def get_auth_url(self):
         qq_auth_url = 'https://graph.qq.com/oauth2.0/authorize'
         auth_url = qq_auth_url + '?response_type=code&client_id={}&redirect_uri={}&state=mlws' \
@@ -27,6 +28,7 @@ class QQOauth(object):
         }
         response = requests.get(url=access_token_url, params=payload)
         result = response.text
+        print(result)
         access_token = parse_qs(result)['access_token'][0]
         # print(access_token)
         return access_token
