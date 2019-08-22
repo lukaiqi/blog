@@ -135,7 +135,7 @@ class QqLogin(APIView):
     返回授权地址
     """
 
-    def get(self):
+    def get(self,request):
         qq = QQOauth()
         auth_url = qq.get_auth_url()
         return Response(auth_url)
