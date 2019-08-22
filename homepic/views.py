@@ -1,6 +1,7 @@
 import random
 from rest_framework import mixins, viewsets
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -37,10 +38,11 @@ class DanmuView(APIView):
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
+    def post(self, request):
         dm = Danmu()
-        keyword = request.query_params.get('keyword')
-        searchtype = request.query_params.get('type')
+
+        keyword = request.data.get('keyword')
+        searchtype = request.data.get('type')
         if searchtype == '1':
             # 昵称精确匹配
             res = dm.matchnn(keyword)

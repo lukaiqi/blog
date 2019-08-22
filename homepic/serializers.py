@@ -20,3 +20,4 @@ class HomepicAddSerializer(serializers.ModelSerializer):
     class Meta:
         model = Homepic
         fields = ('url',)
+

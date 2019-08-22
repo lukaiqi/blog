@@ -8,9 +8,13 @@ from rest_framework.response import Response
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
+
 from myspace import settings
-from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer
+from utils.qq_login import QQOauth
+from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer, OAuthSerializer
 from utils.dingxing import DingXing
 from .models import VerifyCode
 
@@ -85,32 +89,34 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
         return self.request.user
 
 
-# class OauthBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
-#     """
-#     绑定用户
-#     """
-#     queryset = User.objects.all()
-#     serializer_class = OAuthSerializer
-#
-#     def create(self, request, *args, **kwargs):
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         user = self.perform_create(serializer)
-#
-#         re_dict = {}
-#         payload = jwt_payload_handler(user)
-#         re_dict["token"] = jwt_encode_handler(payload)
-#         re_dict["name"] = user.name if user.name else user.username
-#         re_dict['userid'] = user.id
-#
-#         headers = self.get_success_headers(serializer.data)
-#         return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
-#
-#     def get_object(self):
-#         return self.request.user
-#
-#     def perform_create(self, serializer):
-#         return serializer.save()
+class OauthBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    """
+    绑定用户
+    """
+    queryset = User.objects.all()
+    serializer_class = OAuthSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.perform_create(serializer)
+
+        re_dict = {}
+        payload = jwt_payload_handler(user)
+        re_dict["token"] = jwt_encode_handler(payload)
+        re_dict["name"] = user.name if user.name else user.username
+        re_dict['userid'] = user.id
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
+
+    def get_object(self):
+        return self.request.user
+
+    def perform_create(self, serializer):
+        return serializer.save()
+
+
 #
 #
 # class WeiboLogin(APIView):
@@ -124,15 +130,17 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
 #         return Response(auth_url)
 #
 #
-# class QqLogin(APIView):
-#     """
-#     返回授权地址
-#     """
-#
-#     def get(self, request):
-#         qq = QQOauth()
-#         auth_url = qq.get_auth_url()
-#         return Response(auth_url)
+class QqLogin(APIView):
+    """
+    返回授权地址
+    """
+
+    def get(self):
+        qq = QQOauth()
+        auth_url = qq.get_auth_url()
+        return Response(auth_url)
+
+
 #
 #
 # class GitHubLogin(APIView):
@@ -173,28 +181,30 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
 #             return Response({'userinfo': userinfo, 'status': '0'})
 #
 #
-# class QQInfo(APIView):
-#     """
-#     获取用户信息
-#     """
-#
-#     def get(self, request):
-#         qq = QQOauth()
-#         code = request.query_params.get('code')
-#         access_token = qq.get_access_token(code)
-#         openid = qq.get_open_id(access_token)
-#         userinfo = qq.get_user_info(access_token, openid)
-#         user = User.objects.filter(oauthtoken=openid)
-#         if user:
-#             payload = jwt_payload_handler(user)
-#             token = jwt_encode_handler(payload)
-#             return Response({
-#                 'user': user,
-#                 'token': token,
-#                 'code': '1'
-#             })
-#         else:
-#             return Response({'userinfo': userinfo, 'code': '0', 'openid': openid})
+class QQInfo(APIView):
+    """
+    获取用户信息
+    """
+
+    def get(self, request):
+        qq = QQOauth()
+        code = request.query_params.get('code')
+        access_token = qq.get_access_token(code)
+        openid = qq.get_open_id(access_token)
+        userinfo = qq.get_user_info(access_token, openid)
+        user = User.objects.filter(oauthtoken=openid)
+        if user:
+            payload = jwt_payload_handler(user)
+            token = jwt_encode_handler(payload)
+            return Response({
+                'user': user,
+                'token': token,
+                'code': '1'
+            })
+        else:
+            return Response({'userinfo': userinfo, 'code': '0', 'openid': openid})
+
+
 #
 
 #
