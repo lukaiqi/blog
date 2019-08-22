@@ -40,9 +40,9 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('docs/', include_docs_urls(title='梦落无声')),
     path('web/login', obtain_jwt_token),  # JWT认证
-    path('danmu', DanmuView.as_view()),
-    path('qqlogin', QqLogin.as_view()),
-    path('qqinfo', QQInfo.as_view()),
+    path('web/danmu', DanmuView.as_view()),
+    path('web/qqlogin', QqLogin.as_view()),
+    path('web/qqinfo', QQInfo.as_view()),
 
 ]
 
