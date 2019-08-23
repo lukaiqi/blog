@@ -138,8 +138,9 @@ class QQInfo(APIView):
             user = User.objects.get(openid=openid)
             payload = jwt_payload_handler(user)
             token = jwt_encode_handler(payload)
+            user = User.objects.filter(openid=openid)
             return Response({
-                # 'user': user,
+                'user': user,
                 'token': token,
                 'code': '1'
             })
