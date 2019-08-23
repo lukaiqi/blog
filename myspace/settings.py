@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'users',
     'article',
     'comment',
-    'homepic',
+    'danmu',
     'rest_framework.authtoken'
 ]
 
@@ -90,6 +90,7 @@ DATABASES = {
         'PASSWORD': 'mysql',
         'HOST': '47.106.69.171',
         'PORT': '3306',
+        'charset': 'utf8mb4'
     }
 }
 

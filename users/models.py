@@ -14,9 +14,7 @@ class UserProfile(AbstractUser):
     gender = models.CharField(max_length=6, default="1", verbose_name='性别')
     mobile = models.CharField(max_length=11, null=True, blank=True, verbose_name='电话')
     email = models.EmailField(max_length=50, null=True, blank=True, verbose_name='邮箱')
-    avatar = models.CharField(max_length=100, null=True, blank=True, verbose_name='用户头像')
     openid = models.CharField(max_length=50, null=True, blank=True, verbose_name='身份id')
-    origin = models.CharField(max_length=10, default='注册', verbose_name='来源')
 
     class Meta:
         verbose_name = "用户信息"
