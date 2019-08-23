@@ -134,16 +134,16 @@ class QQInfo(APIView):
         access_token = qq.get_access_token(code)
         openid = qq.get_open_id(access_token)
         userinfo = qq.get_user_info(access_token, openid)
-        user = User.objects.filter(openid=openid)
-        if user:
+        try:
+            user = User.objects.get(openid=openid)
             payload = jwt_payload_handler(user)
             token = jwt_encode_handler(payload)
             return Response({
-                'user': user,
+                # 'user': user,
                 'token': token,
                 'code': '1'
             })
-        else:
+        except:
             return Response({'userinfo': userinfo, 'code': '0', 'openid': openid})
 
 
