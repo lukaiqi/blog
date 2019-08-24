@@ -21,8 +21,9 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet
-from users.views import UserViewSet, SMSCodeViewSet, QqLogin, QQInfo,QQBindViewSet
+from users.views import UserViewSet, SMSCodeViewSet, QqLogin, QQInfo, QQBindViewSet
 from comment.views import CommentViewSet
+from danmu.views import DanmuViewSet, JinyanViewSet
 
 router = SimpleRouter()
 router.register('artical', ArticleListViewSet, base_name='artical'),
@@ -30,6 +31,8 @@ router.register('send_code', SMSCodeViewSet, base_name='send_code'),
 router.register('user', UserViewSet, base_name='user'),
 router.register('comment', CommentViewSet, base_name='comment'),
 router.register('qqbind', QQBindViewSet, base_name='qqbind'),
+router.register('danmu', DanmuViewSet, base_name='danmu'),
+router.register('jinyan', JinyanViewSet, base_name='jinyan'),
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
