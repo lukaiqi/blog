@@ -1,6 +1,8 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, viewsets
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+
 from .serializers import DanmuSerializer, JinyanSerializer
 from .models import Danmu, Jinyan
 
@@ -20,17 +22,23 @@ class DanmuViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     pagination_class = StandardResultsSetPagination  # 分页
 
     def get_queryset(self):
-        searchtype = self.request.query_params.get('serachtype')
+        searchtype = self.request.query_params.get('searchtype')
         keyword = self.request.query_params.get('keyword')
         print(searchtype, keyword)
-        if searchtype == '1':
-            # 昵称精确查找弹幕
-            res = Danmu.objects.filter(nickname=keyword).order_by('id')
-            return res
-        elif searchtype == '2':
-            #     弹幕搜索
-            res = Danmu.objects.filter(content__contains=keyword).order_by('id')
-            return res
+        if searchtype:
+            print('======')
+            if searchtype == '1':
+                # 昵称精确查找弹幕
+                res = Danmu.objects.filter(nickname=keyword).order_by('id')
+                return res
+            elif searchtype == '2':
+                #     弹幕搜索
+                res = Danmu.objects.filter(content__contains=keyword).order_by('id')
+                return res
+            else:
+                return []
+        else:
+            return []
 
 
 class JinyanViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
