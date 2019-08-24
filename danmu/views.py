@@ -49,7 +49,7 @@ class JinyanViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def get_queryset(self):
         keyword = self.request.query_params.get('keyword')
         searchtype = self.request.query_params.get('searchtype')
-        if searchtype:
+        if searchtype and keyword:
             if searchtype == '1':
                 # 查被禁言的发言记录
                 res = Jinyan.objects.filter(dnic=keyword).order_by('id')
@@ -59,6 +59,6 @@ class JinyanViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
                 res = Jinyan.objects.filter(snic=keyword).order_by('id')
                 return res
             else:
-                return []
+                return Jinyan.objects.all().order_by('id')
         else:
             return Jinyan.objects.all().order_by('id')
