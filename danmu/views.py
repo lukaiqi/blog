@@ -1,7 +1,8 @@
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, viewsets
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .serializers import DanmuSerializer, JinyanSerializer
 from .models import Danmu, Jinyan
@@ -20,11 +21,12 @@ class StandardResultsSetPagination(PageNumberPagination):
 class DanmuViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = DanmuSerializer
     pagination_class = StandardResultsSetPagination  # 分页
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         searchtype = self.request.query_params.get('searchtype')
         keyword = self.request.query_params.get('keyword')
-        print(searchtype, keyword)
         if searchtype:
             print('======')
             if searchtype == '1':
