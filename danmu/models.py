@@ -27,3 +27,17 @@ class Jinyan(models.Model):
 
     def __str__(self):
         return self.dnic
+
+
+class Liwu(models.Model):
+    nickname = models.CharField(max_length=50, default='', verbose_name='昵称')
+    gfid = models.CharField(max_length=10, default='', verbose_name='礼物id')
+    gfcnt = models.CharField(max_length=10, default='1', verbose_name='礼物数量')
+    hits = models.CharField(max_length=10, default='1', verbose_name='连击数')
+
+    class Meta:
+        verbose_name = '礼物'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.nickname

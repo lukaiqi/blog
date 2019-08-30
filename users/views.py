@@ -111,17 +111,6 @@ class QQBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         return serializer.save()
 
 
-class QqLogin(APIView):
-    """
-    返回授权地址
-    """
-
-    def get(self, request):
-        qq = QQOauth()
-        auth_url = qq.get_auth_url()
-        return Response(auth_url)
-
-
 class QQInfo(APIView):
     """
     获取用户信息

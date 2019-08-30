@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet
-from users.views import UserViewSet, SMSCodeViewSet, QqLogin, QQInfo, QQBindViewSet
+from users.views import UserViewSet, SMSCodeViewSet, QQInfo, QQBindViewSet
 from comment.views import CommentViewSet
 from danmu.views import DanmuViewSet, JinyanViewSet
 
@@ -41,7 +41,6 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('docs/', include_docs_urls(title='梦落无声')),
     path('web/login', obtain_jwt_token),  # JWT认证
-    path('web/qqlogin', QqLogin.as_view()),
     path('web/qqinfo', QQInfo.as_view()),
 
 ]
