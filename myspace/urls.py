@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet
-from users.views import UserViewSet, SMSCodeViewSet, QQInfo, QQBindViewSet
+from users.views import UserViewSet, SMSCodeViewSet, QQlogin, OauthBindViewSet, MPlogin
 from comment.views import CommentViewSet
 from danmu.views import DanmuViewSet, JinyanViewSet
 
@@ -30,7 +30,7 @@ router.register('artical', ArticleListViewSet, base_name='artical'),
 router.register('send_code', SMSCodeViewSet, base_name='send_code'),
 router.register('user', UserViewSet, base_name='user'),
 router.register('comment', CommentViewSet, base_name='comment'),
-router.register('qqbind', QQBindViewSet, base_name='qqbind'),
+router.register('oauthbind', OauthBindViewSet, base_name='oauthbind'),
 router.register('danmu', DanmuViewSet, base_name='danmu'),
 router.register('jinyan', JinyanViewSet, base_name='jinyan'),
 
@@ -41,7 +41,8 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('docs/', include_docs_urls(title='梦落无声')),
     path('web/login', obtain_jwt_token),  # JWT认证
-    path('web/qqinfo', QQInfo.as_view()),
+    path('web/qqlogin', QQlogin.as_view()),
+    path('web/mplogin', MPlogin.as_view())
 
 ]
 

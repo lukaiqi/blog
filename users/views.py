@@ -13,6 +13,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
 from myspace import settings
 from utils.qq_login import QQOauth
+from utils.mp_login import MPOauth
 from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer, OAuthSerializer
 from utils.dingxing import DingXing
 from .models import VerifyCode
@@ -88,7 +89,7 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
         return self.request.user
 
 
-class QQBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class OauthBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
     绑定用户
     """
@@ -111,7 +112,7 @@ class QQBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         return serializer.save()
 
 
-class QQInfo(APIView):
+class QQlogin(APIView):
     """
     获取用户信息
     """
@@ -133,6 +134,30 @@ class QQInfo(APIView):
             })
         except:
             return Response({'userinfo': userinfo, 'code': '0', 'openid': openid})
+
+
+class MPlogin(APIView):
+    """
+    获取用户信息
+    """
+
+    def get(self, request):
+        mp = MPOauth()
+        code = request.query_params.get('code')
+        openid = mp.get_openid(code)
+        try:
+            user = User.objects.get(openid=openid)
+            payload = jwt_payload_handler(user)
+            token = jwt_encode_handler(payload)
+            return Response({
+                'token': token,
+                'flag': '1'
+            })
+        except:
+            return Response({
+                'flag': '0',
+                'openid': openid
+            })
 
 
 def jwt_response_payload_handler(token, user=None, request=None):
