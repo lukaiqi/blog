@@ -31,11 +31,11 @@ class DanmuViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             print('======')
             if searchtype == '1':
                 # 昵称精确查找弹幕
-                res = Danmu.objects.filter(nickname=keyword).order_by('id')
+                res = Danmu.objects.filter(nickname=keyword).order_by('-id')
                 return res
             elif searchtype == '2':
                 #     弹幕搜索
-                res = Danmu.objects.filter(content__contains=keyword).order_by('id')
+                res = Danmu.objects.filter(content__contains=keyword).order_by('-id')
                 return res
             else:
                 return []
@@ -44,9 +44,10 @@ class DanmuViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class JinyanViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Jinyan.objects.all().order_by('id')
     serializer_class = JinyanSerializer
     pagination_class = StandardResultsSetPagination  # 分页
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         keyword = self.request.query_params.get('keyword')
@@ -54,13 +55,13 @@ class JinyanViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         if searchtype and keyword:
             if searchtype == '1':
                 # 查被禁言的发言记录
-                res = Jinyan.objects.filter(dnic=keyword).order_by('id')
+                res = Jinyan.objects.filter(dnic=keyword).order_by('-id')
                 return res
             elif searchtype == '2':
                 # 查房管禁言了哪些用户
-                res = Jinyan.objects.filter(snic=keyword).order_by('id')
+                res = Jinyan.objects.filter(snic=keyword).order_by('-id')
                 return res
             else:
-                return Jinyan.objects.all().order_by('id')
+                return Jinyan.objects.all().order_by('-id')
         else:
-            return Jinyan.objects.all().order_by('id')
+            return Jinyan.objects.all().order_by('-id')

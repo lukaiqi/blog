@@ -27,7 +27,7 @@ class ArticleListViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.
     retrieve:
     显示文章详情
     """
-    queryset = Article.objects.all().order_by('id')
+    queryset = Article.objects.all().order_by('-id')
     serializer_class = ArticleSerializer
     pagination_class = StandardResultsSetPagination  # 分页
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)  # 过滤，搜索，排序
