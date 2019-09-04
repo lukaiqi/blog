@@ -73,11 +73,12 @@ class CountViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = CountSerializer
 
     def get_queryset(self):
-        today = datetime.datetime.now().date()
+        today = datetime.date.today()
         num = []
-        for i in range(1, 8):
+        for i in range(8):
             date = today - datetime.timedelta(days=i)
-            num_temp = Danmu.objects.filter(sendtime__lte=today, sendtime__gt=date).count()
-            num.append({'num': num_temp, 'sendtime': date.strftime('%Y-%m-%d')})
-        print(num)
+            lastdate = today - datetime.timedelta(days=i + 1)
+            num_temp = Danmu.objects.filter(sendtime__range=(lastdate, date)).count()
+            num.append({'num': num_temp, 'sendtime': lastdate.strftime('%Y-%m-%d')})
+        # print(num)
         return num
