@@ -56,7 +56,8 @@ class UserRegSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True, allow_blank=False, label='用户名',
                                      validators=[UniqueValidator(queryset=User.objects.all(), message='用户已存在')])
     # 密码,write_only表示只写，不返回
-    password = serializers.CharField(style={'input_type': 'password'}, label='密码', write_only=True)
+    password = serializers.CharField(style={'input_type': 'password'}, label='密码', write_only=True, min_length=6,
+                                     max_length=16)
 
     # 设置密码
     def create(self, validated_data):
@@ -90,7 +91,8 @@ class UserRegSerializer(serializers.ModelSerializer):
 class OAuthSerializer(serializers.ModelSerializer):
     openid = serializers.CharField(required=True, allow_blank=False, allow_null=False)
     # 密码,write_only表示只写，不返回
-    password = serializers.CharField(style={'input_type': 'password'}, label='密码', write_only=True)
+    password = serializers.CharField(style={'input_type': 'password'}, label='密码', write_only=True, min_length=6,
+                                     max_length=16)
 
     def create(self, validated_data):
         user = super(OAuthSerializer, self).create(validated_data=validated_data)

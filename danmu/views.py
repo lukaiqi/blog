@@ -1,10 +1,12 @@
+import datetime
+
 from rest_framework import mixins, viewsets
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from .serializers import DanmuSerializer, JinyanSerializer
+from .serializers import DanmuSerializer, JinyanSerializer, CountSerializer
 from .models import Danmu, Jinyan
 
 
@@ -65,3 +67,17 @@ class JinyanViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
                 return Jinyan.objects.all().order_by('-id')
         else:
             return Jinyan.objects.all().order_by('-id')
+
+
+class CountViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = CountSerializer
+
+    def get_queryset(self):
+        today = datetime.datetime.now().date()
+        num = []
+        for i in range(1, 8):
+            date = today - datetime.timedelta(days=i)
+            num_temp = Danmu.objects.filter(sendtime__lte=today, sendtime__gt=date).count()
+            num.append({'num': num_temp, 'sendtime': date.strftime('%Y-%m-%d')})
+        print(num)
+        return num
