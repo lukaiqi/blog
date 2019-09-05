@@ -75,7 +75,7 @@ class CountViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def get_queryset(self):
         today = datetime.date.today()
         num = []
-        for i in range(8):
+        for i in range(7):
             date = today - datetime.timedelta(days=i)
             lastdate = today - datetime.timedelta(days=i + 1)
             num_temp = Danmu.objects.filter(sendtime__range=(lastdate, date)).count()
