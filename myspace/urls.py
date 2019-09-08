@@ -23,7 +23,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet
 from users.views import UserViewSet, SMSCodeViewSet, QQlogin, OauthBindViewSet, MPlogin
 from comment.views import CommentViewSet
-from danmu.views import DanmuViewSet, JinyanViewSet,CountViewSet
+from danmu.views import DanmuViewSet, JinyanViewSet,CountViewSet,Weather
 
 router = SimpleRouter()
 router.register('artical', ArticleListViewSet, base_name='artical'),
@@ -43,8 +43,8 @@ urlpatterns = [
     path('docs/', include_docs_urls(title='梦落无声')),
     path('web/login', obtain_jwt_token),  # JWT认证
     path('web/qqlogin', QQlogin.as_view()),
-    path('web/mplogin', MPlogin.as_view())
-
+    path('web/mplogin', MPlogin.as_view()),
+    path('web/weather', Weather.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

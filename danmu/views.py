@@ -1,13 +1,14 @@
 import datetime
-
 from rest_framework import mixins, viewsets
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-
 from .serializers import DanmuSerializer, JinyanSerializer, CountSerializer
 from .models import Danmu, Jinyan
+from utils.weather import Weather
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -88,3 +89,22 @@ class CountViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             num.append({'num': num_temp, 'sendtime': lastdate.strftime('%Y-%m-%d')})
         # print(num)
         return num
+
+
+class Weather(APIView):
+    def get(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[-1].strip()
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        weather = Weather()
+        try:
+            adcode = weather.getadcode(ip)
+            lives = weather.getliveweather(adcode)
+            casts = weather.getforecast(adcode)
+            print(lives)
+            return Response({'lives':lives,'casts':casts})
+        except:
+            return Response({'msg': '请求失败'})
+
