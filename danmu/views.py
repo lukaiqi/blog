@@ -91,7 +91,7 @@ class CountViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         return num
 
 
-class Weather(APIView):
+class WeatherView(APIView):
     def get(self, request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
@@ -102,9 +102,8 @@ class Weather(APIView):
         try:
             adcode = weather.getadcode(ip)
             lives = weather.getliveweather(adcode)
-            casts = weather.getforecast(adcode)
-            print(lives)
-            return Response({'lives':lives,'casts':casts})
+            casts = weather.getforecastweather(adcode)
+            print(adcode,lives,casts)
+            return Response({'lives': lives, 'casts': casts})
         except:
             return Response({'msg': '请求失败'})
-

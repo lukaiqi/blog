@@ -12,27 +12,18 @@ class Weather(object):
     def getadcode(self, ip):
         response = requests.get(self.ipaddr, {'key': self.key, 'ip': ip})
         adcode = json.loads(response.text)['adcode']
-        print(adcode)
         return adcode
 
     def getliveweather(self, adcode):
         response = requests.get(self.weatheraddr, {'city': adcode, 'extensions': 'base', 'key': self.key})
-        try:
-            lives = json.loads(response.text)['lives']
-            print(lives[0])
-            return lives[0]
-        except:
-            return {}
+        lives = json.loads(response.text)['lives']
+        return lives[0]
 
-    def getforecast(self, adcode):
+    def getforecastweather(self, adcode):
         response = requests.get(self.weatheraddr, {'city': adcode, 'extensions': 'all', 'key': self.key})
-        try:
-            forecast = json.loads(response.text)['forecasts']
-            list = forecast[0]['casts']
-            print(list, type(list))
-            return list
-        except:
-            return []
+        forecast = json.loads(response.text)['forecasts']
+        list = forecast[0]['casts']
+        return list
 
 
 if __name__ == '__main__':
