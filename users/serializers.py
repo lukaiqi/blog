@@ -23,7 +23,7 @@ class CodeSerializer(serializers.Serializer):
             raise serializers.ValidationError('手机号已被注册')
         # 验证手机号码格式
         if not re.match('^1[3456789]\d{9}$', mobile):
-            raise serializers.ValidationError('手机号非法')
+            raise serializers.ValidationError('手机号格式不正确')
         one_min_ago = datetime.now() - timedelta(hours=0, minutes=1, seconds=0)
         if VerifyCode.objects.filter(add_time__gt=one_min_ago, mobile=mobile):
             raise serializers.ValidationError('距离上次发送未超过60s')

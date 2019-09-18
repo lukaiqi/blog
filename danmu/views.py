@@ -103,7 +103,7 @@ class WeatherView(APIView):
             adcode = weather.getadcode(ip)
             lives = weather.getliveweather(adcode)
             casts = weather.getforecastweather(adcode)
-            print(adcode,lives,casts)
+            print(adcode, lives, casts)
             return Response({'lives': lives, 'casts': casts})
         except:
             return Response({'msg': '请求失败'})
