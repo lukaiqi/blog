@@ -11,9 +11,8 @@ class Weather(object):
 
     def getadcode(self, ip):
         response = requests.get(self.ipaddr, {'key': self.key, 'ip': ip})
-        adcode = json.loads(response.text)
-        print(adcode)
-        return adcode
+        res = json.loads(response.text)
+        return res['adcode']
 
     def getliveweather(self, adcode):
         response = requests.get(self.weatheraddr, {'city': adcode, 'extensions': 'base', 'key': self.key})
@@ -30,5 +29,5 @@ class Weather(object):
 
 if __name__ == '__main__':
     weather = Weather()
-    weather.getadcode('222.209.37.212')
+    weather.getadcode('125.70.32.111')
     weather.getliveweather('510100')
