@@ -6,7 +6,7 @@ import requests
 class MPOauth(object):
     def __init__(self):
         self.appid = 'wx8aa6946ab2be69ca'
-        self.secret = '7c1a0e850447bb6fa1ebd36840914966'
+        self.secret = '1104788f58dcc6059dba150047c1ecdf'
         self.grant_type = 'authorization_code'
 
     def get_openid(self, code):
@@ -19,13 +19,15 @@ class MPOauth(object):
         }
         response = requests.get(url, payload)
         result = json.loads(response.text)
-        try:
-            openid = result['openid']
-        except:
-            openid = ''
+        print(result)
+        openid = result['openid']
+        # try:
+        #     openid = result['openid']
+        # except:
+        #     openid = ''
         return openid
 
 
 if __name__ == '__main__':
     mp = MPOauth()
-    mp.get_openid('033Ea2G82QvZkL0gm0H82rV1G82Ea2Ga')
+    mp.get_openid('043je5vC1RKWH50z03vC1qMZuC1je5vo')
