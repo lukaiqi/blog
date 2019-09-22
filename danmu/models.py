@@ -7,7 +7,7 @@ from django.db import models
 class Danmu(models.Model):
     nickname = models.CharField(max_length=50, default='', verbose_name='昵称')
     content = models.TextField(default='', verbose_name='弹幕')
-    sendtime = models.DateTimeField(default=None, verbose_name='发送时间')
+    sendtime = models.DateTimeField(default=datetime.now, verbose_name='发送时间')
 
     class Meta:
         verbose_name = '弹幕'
