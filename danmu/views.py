@@ -87,7 +87,6 @@ class CountViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             lastdate = today - datetime.timedelta(days=i + 1)
             num_temp = Danmu.objects.filter(sendtime__range=(lastdate, date)).count()
             num.append({'num': num_temp, 'sendtime': lastdate.strftime('%Y-%m-%d')})
-        # print(num)
         return num
 
 
