@@ -2,6 +2,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import mixins, viewsets, filters
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Jinghua
@@ -19,9 +20,12 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 class DakaListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    serializer_class = DakaListSerializer
-    queryset = Jinghua.objects.all().order_by('-id')
-    pagination_class = StandardResultsSetPagination
+    # 认证方式
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    # 权限
+    permission_classes = (IsAuthenticated,)
+    queryset = Jinghua.objects.all().order_by('-id')
+    serializer_class = DakaListSerializer
+    pagination_class = StandardResultsSetPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)  # 过滤，搜索，排序
     search_fields = ('nickname',)  # 搜索

@@ -35,7 +35,7 @@ router.register('oauthbind', OauthBindViewSet, base_name='oauthbind'),
 router.register('danmu', DanmuViewSet, base_name='danmu'),
 router.register('jinyan', JinyanViewSet, base_name='jinyan'),
 router.register('danmu_analysis', CountViewSet, base_name='danmu_analysis'),
-router.register('daka_analysis', DakaListViewSet, base_name='daka_analysis'),
+router.register('jinghua', DakaListViewSet, base_name='jinghua'),
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
