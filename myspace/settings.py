@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'article',
     'comment',
     'danmu',
+    'jinghua',
     'rest_framework.authtoken'
 ]
 

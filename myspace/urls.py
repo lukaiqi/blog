@@ -23,7 +23,8 @@ from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet
 from users.views import UserViewSet, SMSCodeViewSet, QQlogin, OauthBindViewSet, MPlogin
 from comment.views import CommentViewSet
-from danmu.views import DanmuViewSet, JinyanViewSet,CountViewSet,WeatherView
+from danmu.views import DanmuViewSet, JinyanViewSet, CountViewSet, WeatherView
+from jinghua.views import DakaListViewSet
 
 router = SimpleRouter()
 router.register('artical', ArticleListViewSet, base_name='artical'),
@@ -33,7 +34,8 @@ router.register('comment', CommentViewSet, base_name='comment'),
 router.register('oauthbind', OauthBindViewSet, base_name='oauthbind'),
 router.register('danmu', DanmuViewSet, base_name='danmu'),
 router.register('jinyan', JinyanViewSet, base_name='jinyan'),
-router.register('count', CountViewSet, base_name='count'),
+router.register('danmu_analysis', CountViewSet, base_name='danmu_analysis'),
+router.register('daka_analysis', DakaListViewSet, base_name='daka_analysis'),
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
