@@ -11,7 +11,7 @@ class UserProfile(AbstractUser):
     """
     # 用户用手机注册，所以昵称，邮箱可以为空
     nickname = models.CharField(max_length=30, null=True, blank=True, verbose_name='昵称')
-    gender = models.CharField(max_length=6, default="1", verbose_name='性别')
+    gender = models.IntegerField(default=0, verbose_name='性别')
     mobile = models.CharField(max_length=11, null=True, blank=True, verbose_name='电话')
     email = models.EmailField(max_length=50, null=True, blank=True, verbose_name='邮箱')
     openid = models.CharField(max_length=50, null=True, blank=True, verbose_name='身份id')
@@ -38,5 +38,3 @@ class VerifyCode(models.Model):
 
     def __str__(self):
         return self.code
-
-
