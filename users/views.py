@@ -1,5 +1,7 @@
 import random
 import string
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
@@ -164,6 +166,8 @@ def jwt_response_payload_handler(token, user=None, request=None):
     """
     设置jwt登录之后返回token和user信息
     """
+    user.last_login = datetime.now()
+    user.save()
     return {
         'token': token,
         'user': UserDetailSerializer(user, context={'request': request}).data
