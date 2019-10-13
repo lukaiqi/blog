@@ -127,10 +127,11 @@ class QQlogin(APIView):
         userinfo = qq.get_user_info(access_token, openid)
         try:
             user = User.objects.get(openid=openid)
+            user.last_login = datetime.now()
+            user.save()
             payload = jwt_payload_handler(user)
             token = jwt_encode_handler(payload)
             return Response({
-                # 'user': user,
                 'token': token,
                 'code': '1'
             })
@@ -149,6 +150,8 @@ class MPlogin(APIView):
         openid = mp.get_openid(code)
         try:
             user = User.objects.get(openid=openid)
+            user.last_login = datetime.now()
+            user.save()
             payload = jwt_payload_handler(user)
             token = jwt_encode_handler(payload)
             return Response({
