@@ -132,6 +132,7 @@ class QQlogin(APIView):
             payload = jwt_payload_handler(user)
             token = jwt_encode_handler(payload)
             return Response({
+                'user': UserDetailSerializer(user, context={'request': request}).data,
                 'token': token,
                 'code': '1'
             })
