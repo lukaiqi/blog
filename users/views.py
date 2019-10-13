@@ -31,7 +31,7 @@ class CustomBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None):
         try:
             # 用户名和手机都能登录
-            user = User.objects.get(Q(username=username) | Q(mobile=username) | Q(email=username))
+            user = User.objects.get(Q(username=username) | Q(mobile=username))
             if user.check_password(password):
                 return user
         except Exception as e:
