@@ -76,33 +76,15 @@ class JinyanViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
             return Jinyan.objects.all().order_by('-id')
 
 
-class CountViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class DMCountViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = CountSerializer
 
     def get_queryset(self):
         today = datetime.date.today()
-        num = []
+        list = []
         for i in range(7):
             date = today - datetime.timedelta(days=i)
             lastdate = today - datetime.timedelta(days=i + 1)
             num_temp = Danmu.objects.filter(sendtime__range=(lastdate, date)).count()
-            num.append({'num': num_temp, 'sendtime': lastdate.strftime('%Y-%m-%d')})
-        return num
-
-
-class WeatherView(APIView):
-    def get(self, request):
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[-1].strip()
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        weather = Weather()
-        try:
-            adcode = weather.getadcode(ip)
-            lives = weather.getliveweather(adcode)
-            casts = weather.getforecastweather(adcode)
-            print(adcode, lives, casts)
-            return Response({'lives': lives, 'casts': casts})
-        except:
-            return Response({'msg': '请求失败'})
+            list.append({'count': num_temp, 'date': lastdate.strftime('%Y-%m-%d')})
+        return list

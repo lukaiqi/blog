@@ -15,8 +15,9 @@ class JinyanSerializer(serializers.ModelSerializer):
 
 
 class CountSerializer(serializers.ModelSerializer):
-    num = serializers.CharField(max_length=10)
+    count = serializers.CharField(max_length=10)
+    date = serializers.CharField(max_length=10)
 
     class Meta:
         model = Danmu
-        fields = ('sendtime', 'num')
+        fields = ('count', 'date')
