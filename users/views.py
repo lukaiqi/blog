@@ -13,7 +13,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
-from myspace import settings
+from myspace import dev_settings
 from utils.qq_login import QQOauth
 from utils.mp_login import MPOauth
 from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer, OAuthSerializer
@@ -50,7 +50,7 @@ class SMSCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         mobile = serializer.validated_data['mobile']
         # 生成四位数字验证码
         code = ''.join(random.sample(string.digits, 6))
-        dx = DingXing(settings.APP_CODE)
+        dx = DingXing(dev_settings.APP_CODE)
         sms_status = dx.send_sms(mobile=mobile, code=code)
         if sms_status['return_code'] != '00000':  # 服务商提供的发送成功的状态码
             return Response({
