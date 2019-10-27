@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'django_filters',
+    'corsheaders',
     'ckeditor',
     'ckeditor_uploader',
     'users',
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -168,4 +170,9 @@ AUTHENTICATION_BACKENDS = (
 )
 # 发送短信验证码
 APP_CODE = '6b5974d1336f415ca1901fd6ef6fe95b'
-# 微博登录
+
+# 跨域白名单
+CORS_ORIGIN_WHITELIST = [
+    "https://ishuangsheng.cn",
+    # "localhost:8080"
+]
