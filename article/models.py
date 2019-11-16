@@ -11,7 +11,7 @@ class ArticleType(models.Model):
     name = models.CharField(max_length=10, verbose_name='分类名字')
 
     class Meta:
-        verbose_name = '文章类型'
+        verbose_name = '类型'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -21,12 +21,13 @@ class ArticleType(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=50, verbose_name='标题')
     type_name = models.ForeignKey(ArticleType, on_delete=models.CASCADE, verbose_name='文章分类')
+    desc = models.CharField(max_length=100, default='', verbose_name='概述')
     click_num = models.IntegerField(default=0, verbose_name='点击数')
     content = RichTextUploadingField()
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
 
     class Meta:
-        verbose_name = '文章'
+        verbose_name = '列表'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -40,7 +41,7 @@ class Comment(models.Model):
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
 
     class Meta:
-        verbose_name = '文章评论'
+        verbose_name = '评论'
         verbose_name_plural = verbose_name
 
     def __str__(self):

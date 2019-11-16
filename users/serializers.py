@@ -47,7 +47,7 @@ class UserRegSerializer(serializers.ModelSerializer):
     code = serializers.CharField(required=True, max_length=6, min_length=6, write_only=True,
                                  label='验证码',
                                  error_messages={
-                                     'blank': '请输入验证码',
+                                     'blank': '验证码不能为空',
                                      'required': '请输入验证码',
                                      'max_length': '验证码格式错误',
                                      'min_length': '验证码格式错误'
