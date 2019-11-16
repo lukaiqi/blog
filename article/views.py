@@ -1,10 +1,13 @@
 from rest_framework import mixins, viewsets, filters
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .models import Article
-from .serializers import ArticleSerializer
-
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from .models import Article, Comment
+from .serializers import ArticleSerializer,CommentListSerializer,CommentAddSerializer
+from .filters import CommentFilter
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -43,4 +46,34 @@ class ArticleListViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.
         return Response(serializer.data)
 
 
+class CommentViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
+                     viewsets.GenericViewSet):
+    """
+    list:
+    显示评论列表
+    creat:
+    新建评论
+    """
 
+    queryset = Comment.objects.all().order_by('-add_time')
+
+    # serializer_class = CommentSerializer
+    pagination_class = StandardResultsSetPagination  # 分页
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = CommentFilter
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return CommentAddSerializer
+        elif self.action == 'list':
+            return CommentListSerializer
+
+        return CommentListSerializer
+
+    def get_permissions(self):
+        if self.action == 'create':
+            return [IsAuthenticated()]
+        elif self.action == 'list':
+            return []
+        return []
