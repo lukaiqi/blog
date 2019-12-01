@@ -1,7 +1,6 @@
 import random
 import string
 from datetime import datetime
-
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
@@ -144,7 +143,6 @@ class MPlogin(APIView):
     """
     获取用户信息
     """
-
     def get(self, request):
         mp = MPOauth()
         code = request.query_params.get('code')

@@ -22,7 +22,6 @@ class Article(models.Model):
     title = models.CharField(max_length=50, verbose_name='标题')
     type_name = models.ForeignKey(ArticleType, on_delete=models.CASCADE, verbose_name='文章分类')
     desc = models.CharField(max_length=100, default='', verbose_name='概述')
-    click_num = models.IntegerField(default=0, verbose_name='点击数')
     content = RichTextUploadingField()
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
 

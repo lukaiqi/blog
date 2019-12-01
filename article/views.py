@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from .models import Article, Comment
-from .serializers import ArticleSerializer,CommentListSerializer,CommentAddSerializer
+from .serializers import ArticleSerializer, CommentListSerializer, CommentAddSerializer
 from .filters import CommentFilter
 
 
@@ -38,16 +38,8 @@ class ArticleListViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.
     search_fields = ('title', 'content')  # 搜索
     ordering_fields = ('add_time',)  # 排序
 
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.click_num += 1
-        instance.save()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
 
-
-class CommentViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
-                     viewsets.GenericViewSet):
+class CommentViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
     list:
     显示评论列表
@@ -56,8 +48,6 @@ class CommentViewSet(mixins.ListModelMixin, mixins.CreateModelMixin,
     """
 
     queryset = Comment.objects.all().order_by('-add_time')
-
-    # serializer_class = CommentSerializer
     pagination_class = StandardResultsSetPagination  # 分页
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend,)

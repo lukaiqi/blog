@@ -3,7 +3,7 @@ from article.models import Article, ArticleType, Comment
 
 
 class ArticleAdmin(object):
-    list_display = ['title', 'type_name', 'click_num', 'add_time']
+    list_display = ['title', 'type_name', 'desc', 'add_time']
 
 
 class ArticletypeAdmin(object):

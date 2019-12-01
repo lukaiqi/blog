@@ -152,9 +152,10 @@ CKEDITOR_CONFIGS = {
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'REST_FRAMEWORK': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
     ]
 }
 
@@ -165,7 +166,7 @@ JWT_AUTH = {
 
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
-    # 'django.contrib.auth.backends.ModelBackend',
+    # 'django.contrib.auth.backends.ModelBackend', 默认认证方式
 )
 # 发送短信验证码
 APP_CODE = '6b5974d1336f415ca1901fd6ef6fe95b'
