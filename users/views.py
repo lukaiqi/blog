@@ -117,6 +117,7 @@ class QQlogin(APIView):
     """
     获取用户信息
     """
+
     def get(self, request):
         qq = QQOauth()
         code = request.query_params.get('code')
@@ -142,6 +143,7 @@ class MPlogin(APIView):
     """
     获取用户信息
     """
+
     def get(self, request):
         mp = MPOauth()
         code = request.query_params.get('code')
