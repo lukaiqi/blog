@@ -8,7 +8,7 @@ class UserProfile(AbstractUser):
     用户信息
     性别：0男1女
     """
-    # 用户用手机注册，所以昵称，邮箱可以为空
+    # 用户注册，所以昵称，邮箱可以为空
     nickname = models.CharField(max_length=30, null=True, blank=True, verbose_name='昵称')
     gender = models.IntegerField(default=0, verbose_name='性别')
     mobile = models.CharField(max_length=11, null=True, blank=True, verbose_name='电话')

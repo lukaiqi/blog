@@ -19,8 +19,8 @@ class ArticleType(models.Model):
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=50, verbose_name='标题')
-    type_name = models.ForeignKey(ArticleType, on_delete=models.CASCADE, verbose_name='文章分类')
+    title = models.CharField(max_length=50, default='', verbose_name='标题')
+    type = models.ForeignKey(ArticleType, on_delete=models.CASCADE, verbose_name='文章分类')
     desc = models.TextField(default='', verbose_name='概述')
     content = RichTextUploadingField()
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
@@ -34,9 +34,9 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
-    pid = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='文章id')
+    pid = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='文章')
     content = models.TextField(default='', verbose_name='评论内容')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='用户')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='评论用户')
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
 
     class Meta:

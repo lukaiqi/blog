@@ -3,7 +3,7 @@ from .models import Article, ArticleType, Comment
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-    type_name = serializers.SerializerMethodField()
+    type = serializers.SerializerMethodField()
     """
     文章列表序列化
     """
@@ -12,8 +12,8 @@ class ArticleSerializer(serializers.ModelSerializer):
         model = Article
         fields = '__all__'
 
-    def get_type_name(self, obj):
-        return obj.type_name.name
+    def get_type(self, obj):
+        return obj.type.name
 
 
 class CommentAddSerializer(serializers.ModelSerializer):
@@ -40,4 +40,4 @@ class CommentListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_user(self, obj):
-        return obj.user.username
+        return obj.user.nickname

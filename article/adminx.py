@@ -1,9 +1,9 @@
 import xadmin
-from article.models import Article, ArticleType, Comment
+from .models import Article, ArticleType, Comment
 
 
 class ArticleAdmin(object):
-    list_display = ['title', 'type_name', 'desc', 'add_time']
+    list_display = ['title', 'type', 'desc', 'add_time']
 
 
 class ArticletypeAdmin(object):
@@ -11,7 +11,7 @@ class ArticletypeAdmin(object):
 
 
 class CommentAdmin(object):
-    list_display = ['pid', 'user', 'add_time']
+    list_display = ['pid', 'content', 'user', 'add_time']
 
 
 xadmin.site.register(Article, ArticleAdmin)
