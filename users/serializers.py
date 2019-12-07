@@ -106,4 +106,4 @@ class OAuthSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'openid')
+        fields = ('username', 'password', 'nickname', 'openid')
