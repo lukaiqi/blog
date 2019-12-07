@@ -94,15 +94,12 @@ class OAuthSerializer(serializers.ModelSerializer):
     password = serializers.CharField(style={'input_type': 'password'}, label='密码', write_only=True, min_length=6,
                                      max_length=16)
 
+    # 加密密码
     def create(self, validated_data):
         user = super(OAuthSerializer, self).create(validated_data=validated_data)
         user.set_password(validated_data['password'])
         user.save()
         return user
-
-    def validate(self, attrs):
-        attrs['nickname'] = attrs['username']
-        return attrs
 
     class Meta:
         model = User
