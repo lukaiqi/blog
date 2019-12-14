@@ -1,3 +1,5 @@
+import random
+
 from rest_framework import mixins, viewsets
 
 from girl.models import Music, Sentence
@@ -10,5 +12,10 @@ class MusicListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 class SentenceListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Sentence.objects.all().order_by('-id')
     serializer_class = SentenceListSerializer
+
+    def get_queryset(self):
+        count = Sentence.objects.count()
+        index = random.randint(1, count)
+        queryset = Sentence.objects.filter(id=index)
+        return queryset

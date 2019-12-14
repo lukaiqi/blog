@@ -11,12 +11,12 @@ from django.db import models
 def filepath(instance, filename):  # 返回一个路径名即可。调用时会自动传入user实例和filename两个参数。函数名也不一定需要叫upload_to，只要传入此函数即可。
     ext = os.path.splitext(filename)[1]
     name = strftime('%Y%m%d%H%M%S')
-    return os.path.join(settings.MEDIA_ROOT, 'music', name + ext)
+    return os.path.join('music', name + ext)
 
 
 class Music(models.Model):
     name = models.CharField(max_length=30, default='', verbose_name='名称')
-    url = models.FileField(upload_to=filepath)
+    url = models.FileField(upload_to=filepath, verbose_name='文件路径')
     add_time = models.DateTimeField(default=datetime.datetime.now, verbose_name='添加时间')
 
     class Meta:

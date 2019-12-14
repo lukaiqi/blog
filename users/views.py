@@ -51,10 +51,13 @@ class SMSCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         code = ''.join(random.sample(string.digits, 6))
         if email:
             mail = Mail()
-            mail.send(email, code)
-            code_record = VerifyCode(code=code, email=email)
-            code_record.save()  # 保存到数据库
-            return Response({'msg': '发送成功'})
+            try:
+                mail.send(email, code)
+                code_record = VerifyCode(code=code, email=email)
+                code_record.save()  # 保存到数据库
+                return Response({'msg': '发送成功'})
+            except Exception as e:
+                return Response({'msg': '发送失败'})
         if mobile:
             msg = Msg()
             sms_status = msg.send(mobile, code)

@@ -35,7 +35,6 @@ class CodeSerializer(serializers.Serializer):
     def validate_email(self, email):
         if email == '':
             return None
-        print(email)
         """
         验证邮箱
         :param mobile:
