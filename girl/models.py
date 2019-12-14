@@ -24,7 +24,7 @@ class Music(models.Model):
 
 
 class Sentence(models.Model):
-    content = models.CharField(max_length=30, default='', verbose_name='名称')
+    content = models.TextField(default='', verbose_name='名称')
     add_time = models.DateTimeField(default=datetime.datetime.now, verbose_name='添加时间')
 
     class Meta:
