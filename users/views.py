@@ -38,6 +38,7 @@ class CustomBackend(ModelBackend):
 
 class SMSCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
+    create:
     发送验证码
     """
     serializer_class = CodeSerializer
@@ -71,7 +72,10 @@ class SMSCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
 class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
-    用户
+    create:
+    创建用户
+    retrieve:
+    用户详情
     """
     serializer_class = UserRegSerializer
     queryset = User.objects.all()
@@ -147,6 +151,7 @@ class QQlogin(APIView):
 
 class MPlogin(APIView):
     """
+
     获取用户信息
     """
 

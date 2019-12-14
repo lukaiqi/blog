@@ -7,11 +7,20 @@ from girl.serializers import MusicListSerializer, SentenceListSerializer
 
 
 class MusicListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    list:
+    音乐列表
+    """
     queryset = Music.objects.all().order_by('-id')
     serializer_class = MusicListSerializer
 
 
 class SentenceListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    list:
+    句子列表
+    """
+
     serializer_class = SentenceListSerializer
 
     def get_queryset(self):

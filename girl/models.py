@@ -1,14 +1,10 @@
 import datetime
 import os
 from time import strftime
-from myspace import settings
-
 from django.db import models
 
 
-# Create your models here.
-
-def filepath(instance, filename):  # 返回一个路径名即可。调用时会自动传入user实例和filename两个参数。函数名也不一定需要叫upload_to，只要传入此函数即可。
+def filepath(instance, filename):
     ext = os.path.splitext(filename)[1]
     name = strftime('%Y%m%d%H%M%S')
     return os.path.join('music', name + ext)
