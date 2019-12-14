@@ -9,7 +9,8 @@ User = get_user_model()
 
 
 class CodeSerializer(serializers.Serializer):
-    mobile = serializers.CharField(max_length=11)
+    mobile = serializers.CharField(max_length=11, allow_blank=True)
+    email = serializers.EmailField(allow_blank=True)
 
     # 函数名必须：validate + 验证字段名
     def validate_mobile(self, mobile):
@@ -18,6 +19,8 @@ class CodeSerializer(serializers.Serializer):
         :param mobile:
         :return:
         """
+        if mobile == '':
+            return None
         # 验证手机是否注册
         if User.objects.filter(mobile=mobile).count():
             raise serializers.ValidationError('手机号已被注册')
@@ -28,6 +31,23 @@ class CodeSerializer(serializers.Serializer):
         if VerifyCode.objects.filter(add_time__gt=one_min_ago, mobile=mobile):
             raise serializers.ValidationError('距离上次发送未超过60s')
         return mobile
+
+    def validate_email(self, email):
+        if email == '':
+            return None
+        print(email)
+        """
+        验证邮箱
+        :param mobile:
+        :return:
+        """
+        # 验证邮箱是否注册
+        if User.objects.filter(email=email).count():
+            raise serializers.ValidationError('邮箱已被注册')
+        one_min_ago = datetime.now() - timedelta(hours=0, minutes=1, seconds=0)
+        if VerifyCode.objects.filter(add_time__gt=one_min_ago, mobile=email):
+            raise serializers.ValidationError('距离上次发送未超过60s')
+        return email
 
 
 class UserDetailSerializer(serializers.ModelSerializer):

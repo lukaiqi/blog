@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'users',
     'article',
-    'danmu',
+    # 'danmu',
     'jinghua',
     'rest_framework.authtoken'
 ]
@@ -169,6 +169,8 @@ AUTHENTICATION_BACKENDS = (
 )
 # 发送短信验证码
 APP_CODE = '6b5974d1336f415ca1901fd6ef6fe95b'
+email_username = '17313134897@189.cn'
+email_password = 'Lukaiqi189.cn'
 
 # 跨域白名单
 CORS_ORIGIN_WHITELIST = [
