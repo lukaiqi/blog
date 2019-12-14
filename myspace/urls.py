@@ -24,7 +24,7 @@ from article.views import ArticleListViewSet, CommentViewSet
 from users.views import UserViewSet, SMSCodeViewSet, QQlogin, OauthBindViewSet, MPlogin
 # from danmu.views import DanmuViewSet, JinyanViewSet, DMCountViewSet
 from jinghua.views import DakaListViewSet, JHCountViewSet
-from girl.views import MusicListViewSet
+from girl.views import MusicListViewSet,SentenceListViewSet
 
 router = SimpleRouter()
 router.register('artical', ArticleListViewSet, base_name='artical'),
@@ -38,6 +38,7 @@ router.register('oauthbind', OauthBindViewSet, base_name='oauthbind'),
 router.register('jinghua', DakaListViewSet, base_name='jinghua'),
 router.register('jinghua_analysis', JHCountViewSet, base_name='jinghua_analysis'),
 router.register('music', MusicListViewSet, base_name='music'),
+router.register('sentence', SentenceListViewSet, base_name='sentence'),
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
