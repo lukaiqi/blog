@@ -59,15 +59,11 @@ class SMSCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             msg = Msg()
             sms_status = msg.send(mobile, code)
             if sms_status['return_code'] != '00000':  # 服务商提供的发送成功的状态码
-                return Response({
-                    'msg': '发送失败'
-                })
+                return Response({'msg': '发送失败'})
             else:
                 code_record = VerifyCode(code=code, mobile=mobile)
                 code_record.save()  # 保存到数据库
-                return Response({
-                    {'msg': '发送成功'}
-                })
+                return Response({'msg': '发送成功'})
 
 
 class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
