@@ -10,7 +10,7 @@ User = get_user_model()
 
 class CodeSerializer(serializers.Serializer):
     mobile = serializers.CharField(max_length=11, allow_blank=True)
-    email = serializers.EmailField(allow_blank=True)
+    email = serializers.EmailField(allow_blank=True, required=False)
 
     # 函数名必须：validate + 验证字段名
     def validate_mobile(self, mobile):

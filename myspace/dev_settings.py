@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'users',
     'article',
     # 'danmu',
-    'girl',
+    'liv2d',
+    'photos',
     'jinghua',
     'rest_framework.authtoken'
 ]

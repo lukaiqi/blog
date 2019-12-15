@@ -1,12 +1,12 @@
 import datetime
 import os
-from time import strftime
+import uuid
 from django.db import models
 
 
 def filepath(instance, filename):
     ext = os.path.splitext(filename)[1]
-    name = strftime('%Y%m%d%H%M%S')
+    name = str(uuid.uuid4())
     return os.path.join('music', name + ext)
 
 

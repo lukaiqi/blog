@@ -1,0 +1,1 @@
+default_app_config = 'liv2d.apps.Liv2DConfig'
