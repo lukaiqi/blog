@@ -10,6 +10,7 @@ class QQOauth(object):
         self.client_secret = '0f138d861e33982754deb1882880133a'
         self.redirect_uri = 'https://ishuangsheng.cn/user/login?from=qq'
         self.info_url = 'https://graph.qq.com/user/get_user_info'
+        self.open_id_url = 'https://graph.qq.com/oauth2.0/me'
 
     def get_access_token(self, code):
         access_token_url = 'https://graph.qq.com/oauth2.0/token'
@@ -28,11 +29,10 @@ class QQOauth(object):
         return access_token
 
     def get_openid(self, access_token):
-        open_id_url = 'https://graph.qq.com/oauth2.0/me'
         payload = {
             'access_token': access_token
         }
-        response = requests.get(url=open_id_url, params=payload)
+        response = requests.get(url=self.open_id_url, params=payload)
         temp = response.text.replace('callback', '').replace('(', '').replace(')', '').replace(';', '').strip()
         openid = json.loads(temp)['openid']
         return openid
@@ -44,10 +44,4 @@ class QQOauth(object):
             'openid': openid
         }
         response = requests.get(url=self.info_url, params=payload)
-        # print(response.text)
         return response.text
-
-
-if __name__ == '__main__':
-    QQOauth().get_user_info('657C692EC74583AF1C44EBF88E230B82', 'D1383F8B7FB0919CC31AFAD58D440CB1')
-    # QQOauth().get_open_id('657C692EC74583AF1C44EBF88E230B82')
