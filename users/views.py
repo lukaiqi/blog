@@ -201,7 +201,7 @@ class WbLogin(APIView):
             uid = res_dict['uid']
         except:
             return Response({'msg': 'code非法'})
-        userinfo = weibo.get_user_info(access_token, uid)
+        userinfo = weibo.get_userinfo(access_token, uid)
         try:
             user = User.objects.get(openid=uid)
             user.last_login = datetime.now()
