@@ -17,8 +17,8 @@ class WBOauth(object):
             'code': code,
             'redirect_uri': self.redirect_url
         }
-        response = requests.post(self.access_token_url, payload).text
-        return response
+        response = requests.post(self.access_token_url, payload)
+        return response.text
 
     def get_userinfo(self, access_token, uid):
         response = requests.get('{0}?access_token={1}&uid={2}'.format(self.info_url, access_token, uid))

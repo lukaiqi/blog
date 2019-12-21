@@ -11,9 +11,9 @@ class QQOauth(object):
         self.redirect_uri = 'https://ishuangsheng.cn/user/login?from=qq'
         self.info_url = 'https://graph.qq.com/user/get_user_info'
         self.open_id_url = 'https://graph.qq.com/oauth2.0/me'
+        self.access_token_url = 'https://graph.qq.com/oauth2.0/token'
 
     def get_access_token(self, code):
-        access_token_url = 'https://graph.qq.com/oauth2.0/token'
         payload = {
             'client_id': self.appid,
             'client_secret': self.client_secret,
@@ -21,12 +21,13 @@ class QQOauth(object):
             'code': code,
             'redirect_uri': self.redirect_uri
         }
-        response = requests.get(url=access_token_url, params=payload)
+        response = requests.get(url=self.access_token_url, params=payload)
         result = response.text
-        print(result)
-        access_token = parse_qs(result)['access_token'][0]
-        # print(access_token)
-        return access_token
+        try:
+            access_token = parse_qs(result)['access_token'][0]
+            return access_token
+        except:
+            return None
 
     def get_openid(self, access_token):
         payload = {

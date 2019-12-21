@@ -133,7 +133,13 @@ class QqLogin(APIView):
     def get(self, request):
         qq = QQOauth()
         code = request.query_params.get('code')
+        # 没有code参数
+        if code is None:
+            return Response({'msg': '非法请求'})
         access_token = qq.get_access_token(code)
+        # 获取acces_Token失败
+        if access_token is None:
+            return Response({'msg': 'code非法'})
         openid = qq.get_openid(access_token)
         userinfo = qq.get_userinfo(access_token, openid)
         try:
@@ -185,10 +191,16 @@ class WbLogin(APIView):
     def get(self, request):
         weibo = WBOauth()
         code = request.query_params.get('code')
+        # 没有code参数
+        if code is None:
+            return Response({'msg': '非法请求'})
         res = weibo.get_access_token(code)
         res_dict = json.loads(res)
-        access_token = res_dict['access_token']
-        uid = res_dict['uid']
+        try:
+            access_token = res_dict['access_token']
+            uid = res_dict['uid']
+        except:
+            return Response({'msg': 'code非法'})
         userinfo = weibo.get_user_info(access_token, uid)
         try:
             user = User.objects.get(openid=uid)
