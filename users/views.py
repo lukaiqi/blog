@@ -1,5 +1,6 @@
 import random
 import string
+import json
 from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
@@ -14,6 +15,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
 from utils.qq_login import QQOauth
 from utils.mp_login import MPOauth
+from utils.wb_login import WBOauth
 from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer, OAuthSerializer
 from utils.sendcode import Msg, Mail
 from .models import VerifyCode
@@ -123,7 +125,7 @@ class OauthBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         return serializer.save()
 
 
-class QQlogin(APIView):
+class QqLogin(APIView):
     """
     获取用户信息
     """
@@ -132,8 +134,8 @@ class QQlogin(APIView):
         qq = QQOauth()
         code = request.query_params.get('code')
         access_token = qq.get_access_token(code)
-        openid = qq.get_open_id(access_token)
-        userinfo = qq.get_user_info(access_token, openid)
+        openid = qq.get_openid(access_token)
+        userinfo = qq.get_userinfo(access_token, openid)
         try:
             user = User.objects.get(openid=openid)
             user.last_login = datetime.now()
@@ -146,12 +148,11 @@ class QQlogin(APIView):
                 'code': '1'
             })
         except:
-            return Response({'userinfo': userinfo, 'code': '0', 'openid': openid})
+            return Response({'userinfo': json.loads(userinfo), 'code': '0', 'openid': openid})
 
 
-class MPlogin(APIView):
+class MpLogin(APIView):
     """
-
     获取用户信息
     """
 
@@ -174,6 +175,34 @@ class MPlogin(APIView):
                 'flag': '0',
                 'openid': openid
             })
+
+
+class WbLogin(APIView):
+    """
+    获取用户信息
+    """
+
+    def get(self, request):
+        weibo = WBOauth()
+        code = request.query_params.get('code')
+        res = weibo.get_access_token(code)
+        res_dict = json.loads(res)
+        access_token = res_dict['access_token']
+        uid = res_dict['uid']
+        userinfo = weibo.get_user_info(access_token, uid)
+        try:
+            user = User.objects.get(openid=uid)
+            user.last_login = datetime.now()
+            user.save()
+            payload = jwt_payload_handler(user)
+            token = jwt_encode_handler(payload)
+            return Response({
+                'user': UserDetailSerializer(user, context={'request': request}).data,
+                'token': token,
+                'code': '1'
+            })
+        except:
+            return Response({'userinfo': json.loads(userinfo), 'code': '0', 'openid': uid})
 
 
 def jwt_response_payload_handler(token, user=None, request=None):

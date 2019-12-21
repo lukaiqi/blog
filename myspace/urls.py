@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet, CommentViewSet
-from users.views import UserViewSet, SMSCodeViewSet, QQlogin, OauthBindViewSet, MPlogin
+from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, MpLogin, WbLogin
 # from danmu.views import DanmuViewSet, JinyanViewSet, DMCountViewSet
 from jinghua.views import DakaListViewSet, JHCountViewSet
 from liv2d.views import MusicListViewSet, SentenceListViewSet
@@ -49,8 +49,9 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('docs/', include_docs_urls(title='梦落无声')),
     path('web/login', obtain_jwt_token),  # JWT认证
-    path('web/qqlogin', QQlogin.as_view()),
-    path('web/mplogin', MPlogin.as_view())
+    path('web/qqlogin', QqLogin.as_view()),
+    # path('web/mplogin', MpLogin.as_view())
+    path('web/wblogin', WbLogin.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
