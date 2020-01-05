@@ -17,7 +17,7 @@ from utils.qq_login import QQOauth
 from utils.mp_login import MPOauth
 from utils.wb_login import WBOauth
 from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer, OAuthSerializer
-from utils.sendcode import Msg, Mail
+from utils.sendcode import Mail
 from .models import VerifyCode
 
 User = get_user_model()
@@ -31,7 +31,7 @@ class CustomBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None):
         try:
             # 用户名和手机都能登录
-            user = User.objects.get(Q(username=username) | Q(mobile=username) | Q(email=username))
+            user = User.objects.get(Q(username=username) | Q(email=username))
             if user.check_password(password):
                 return user
         except Exception as e:
@@ -48,28 +48,17 @@ class SMSCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        mobile = serializer.validated_data['mobile']
         email = serializer.validated_data['email']
         # 生成四位数字验证码
         code = ''.join(random.sample(string.digits, 6))
-        if email:
-            mail = Mail()
-            try:
-                mail.send(email, code)
-                code_record = VerifyCode(code=code, email=email)
-                code_record.save()  # 保存到数据库
-                return Response({'msg': '发送成功'})
-            except Exception as e:
-                return Response({'msg': '发送失败'})
-        if mobile:
-            msg = Msg()
-            sms_status = msg.send(mobile, code)
-            if sms_status['return_code'] != '00000':  # 服务商提供的发送成功的状态码
-                return Response({'msg': '发送失败'})
-            else:
-                code_record = VerifyCode(code=code, mobile=mobile)
-                code_record.save()  # 保存到数据库
-                return Response({'msg': '发送成功'})
+        mail = Mail()
+        try:
+            mail.send(email, code)
+            code_record = VerifyCode(code=code, email=email)
+            code_record.save()  # 保存到数据库
+            return Response({'msg': '发送成功'})
+        except:
+            return Response({'msg': '发送失败'})
 
 
 class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):

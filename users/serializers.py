@@ -1,4 +1,3 @@
-import re
 from datetime import datetime, timedelta
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
@@ -9,42 +8,20 @@ User = get_user_model()
 
 
 class CodeSerializer(serializers.Serializer):
-    mobile = serializers.CharField(max_length=11, allow_blank=True)
-    email = serializers.EmailField(allow_blank=True, required=False)
+    email = serializers.CharField()
 
     # 函数名必须：validate + 验证字段名
-    def validate_mobile(self, mobile):
-        """
-        验证手机号
-        :param mobile:
-        :return:
-        """
-        if mobile == '':
-            return None
-        # 验证手机是否注册
-        if User.objects.filter(mobile=mobile).count():
-            raise serializers.ValidationError('手机号已被注册')
-        # 验证手机号码格式
-        if not re.match('^1[3456789]\d{9}$', mobile):
-            raise serializers.ValidationError('手机号格式不正确')
-        one_min_ago = datetime.now() - timedelta(hours=0, minutes=1, seconds=0)
-        if VerifyCode.objects.filter(add_time__gt=one_min_ago, mobile=mobile):
-            raise serializers.ValidationError('距离上次发送未超过60s')
-        return mobile
-
     def validate_email(self, email):
-        if email == '':
-            return None
         """
         验证邮箱
-        :param mobile:
+        :param email:
         :return:
         """
         # 验证邮箱是否注册
         if User.objects.filter(email=email).count():
             raise serializers.ValidationError('邮箱已被注册')
         one_min_ago = datetime.now() - timedelta(hours=0, minutes=1, seconds=0)
-        if VerifyCode.objects.filter(add_time__gt=one_min_ago, mobile=email):
+        if VerifyCode.objects.filter(add_time__gt=one_min_ago, email=email):
             raise serializers.ValidationError('距离上次发送未超过60s')
         return email
 
@@ -56,7 +33,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'nickname', 'gender', 'email', 'mobile')
+        fields = ('username', 'nickname', 'gender', 'email')
 
 
 class UserRegSerializer(serializers.ModelSerializer):
@@ -70,7 +47,7 @@ class UserRegSerializer(serializers.ModelSerializer):
                                      'required': '请输入验证码',
                                      'max_length': '验证码格式错误',
                                      'min_length': '验证码格式错误'
-                                 }, help_text='验证码')
+                                 })
     # 验证用户名是否存在
     username = serializers.CharField(required=True, allow_blank=False, label='用户名',
                                      validators=[UniqueValidator(queryset=User.objects.all(), message='用户已存在')])
@@ -86,10 +63,14 @@ class UserRegSerializer(serializers.ModelSerializer):
         return user
 
     def validate_code(self, code):
-        verify_records = VerifyCode.objects.filter(mobile=self.initial_data['username']).order_by('-add_time')
+        print(self.initial_data['username'])
+        verify_records = VerifyCode.objects.filter(
+            email=self.initial_data['username']).order_by('-add_time')
         five_min_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
+        print(verify_records)
         if verify_records:
             last_record = verify_records[0]
+            print(last_record)
             if five_min_ago > last_record.add_time:
                 raise serializers.ValidationError('验证码过期')
             if last_record.code != code:
@@ -98,13 +79,13 @@ class UserRegSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('验证码错误')
 
     def validate(self, attrs):
-        attrs['mobile'] = attrs['username']
+        attrs['email'] = attrs['username']
         del attrs['code']
         return attrs
 
     class Meta:
         model = User
-        fields = ('username', 'code', 'mobile', 'password')
+        fields = ('username', 'code', 'email', 'password')
 
 
 class OAuthSerializer(serializers.ModelSerializer):

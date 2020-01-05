@@ -39,9 +39,9 @@ class JHCountViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def get_queryset(self):
         today = datetime.date.today()
         list = []
-        for i in range(15):
+        for i in range(30):
             date = today - datetime.timedelta(days=i)
             lastdate = today - datetime.timedelta(days=i + 1)
-            num_temp = Jinghua.objects.filter(otime__range=(lastdate,date)).count()
+            num_temp = Jinghua.objects.filter(otime__range=(lastdate, date)).count()
             list.append({'count': num_temp, 'date': lastdate.strftime('%Y-%m-%d')})
         return list

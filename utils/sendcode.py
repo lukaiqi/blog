@@ -1,29 +1,7 @@
-import json
 import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
 from myspace import settings
-
-import requests
-
-
-class Msg(object):
-    def __init__(self):
-        self.app_code = settings.APP_CODE
-        self.host = 'http://dingxin.market.alicloudapi.com/dx/sendSms'
-
-    def send(self, mobile, code):
-        payload = {
-            'mobile': mobile,
-            'param': 'code:' + code,
-            'tpl_id': 'TP1712202'
-        }
-        headers = {
-            'Authorization': 'APPCODE ' + self.app_code
-        }
-        response = requests.post(url=self.host, data=payload, headers=headers)
-        re_dict = json.loads(response.text)
-        return re_dict
 
 
 class Mail(object):
