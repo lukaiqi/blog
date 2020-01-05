@@ -3,12 +3,9 @@ from rest_framework import mixins, viewsets
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from .serializers import DanmuSerializer, JinyanSerializer, CountSerializer
 from .models import Danmu, Jinyan
-from utils.weather import Weather
 
 
 class StandardResultsSetPagination(PageNumberPagination):

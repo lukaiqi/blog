@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'liv2d',
     'photos',
     'jinghua',
+    'sensor',
     'rest_framework.authtoken'
 ]
 

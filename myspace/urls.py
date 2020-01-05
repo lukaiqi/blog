@@ -26,6 +26,7 @@ from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, 
 from jinghua.views import DakaListViewSet, JHCountViewSet
 from liv2d.views import MusicListViewSet, SentenceListViewSet
 from photos.views import PhotoListViewSet
+from sensor.views import SensorViewSet
 
 router = SimpleRouter()
 router.register('artical', ArticleListViewSet, base_name='artical'),
@@ -41,6 +42,7 @@ router.register('jinghua_analysis', JHCountViewSet, base_name='jinghua_analysis'
 router.register('music', MusicListViewSet, base_name='music'),
 router.register('sentence', SentenceListViewSet, base_name='sentence'),
 router.register('photos', PhotoListViewSet, base_name='photos'),
+router.register('sensor', SensorViewSet, base_name='sensor'),
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),

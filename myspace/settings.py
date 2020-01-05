@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'article',
     # 'danmu',
     'liv2d',
+    'sensor',
     'photos',
     'jinghua',
     'rest_framework.authtoken'
