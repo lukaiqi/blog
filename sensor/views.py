@@ -1,6 +1,7 @@
 from rest_framework import mixins, viewsets
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Sensor
@@ -21,7 +22,8 @@ class SensorViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.Gen
     """
     传感器的值
     """
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
     serializer_class = SensorSerializer
     queryset = Sensor.objects.all().order_by('-add_time')
-    pagination_class = PageNumberPagination
-    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    pagination_class = StandardResultsSetPagination
