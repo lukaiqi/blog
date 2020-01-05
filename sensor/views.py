@@ -17,11 +17,11 @@ class StandardResultsSetPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class SensorViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class SensorViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
     传感器的值
     """
     serializer_class = SensorSerializer
-    queryset = Sensor.objects.all()
+    queryset = Sensor.objects.all().order_by('-add_time')
     pagination_class = PageNumberPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
