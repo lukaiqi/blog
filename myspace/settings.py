@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'sensor',
     'photos',
     'jinghua',
+    'ssz',
     'rest_framework.authtoken'
 ]
 

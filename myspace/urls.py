@@ -27,6 +27,7 @@ from jinghua.views import DakaListViewSet, JHCountViewSet
 from liv2d.views import MusicListViewSet, SentenceListViewSet
 from photos.views import PhotoListViewSet
 from sensor.views import SensorViewSet
+from ssz.views import BiliViewSet,QmViewSet
 
 router = SimpleRouter()
 router.register('artical', ArticleListViewSet, base_name='artical'),
@@ -43,6 +44,8 @@ router.register('music', MusicListViewSet, base_name='music'),
 router.register('sentence', SentenceListViewSet, base_name='sentence'),
 router.register('photos', PhotoListViewSet, base_name='photos'),
 router.register('sensor', SensorViewSet, base_name='sensor'),
+router.register('bilicount', BiliViewSet, base_name='bilicount'),
+router.register('qmcount', QmViewSet, base_name='qmcount'),
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
