@@ -46,12 +46,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'users',
     'article',
-    # 'danmu',
-    'liv2d',
-    'photos',
-    'jinghua',
     'sensor',
-    'ssz',
+    # 'ssz',
     'rest_framework.authtoken'
 ]
 

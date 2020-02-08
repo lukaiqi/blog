@@ -4,7 +4,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from .models import Bilibili, QQMusic
+from .models import BiliBiliInfo,BiliBiliVideoList, QQMusic
 from .serializers import BiliBiliSerializer, QQMusicSerializer
 
 
@@ -20,18 +20,18 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 class BiliViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
-    传感器的值
+    哔哩哔哩投稿视频列表
     """
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
     serializer_class = BiliBiliSerializer
-    queryset = Bilibili.objects.all()
+    queryset = BiliBiliVideoList.objects.all()
     pagination_class = StandardResultsSetPagination
 
 
 class QmViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
-    传感器的值
+    qq音乐歌曲列表
     """
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)

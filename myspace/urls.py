@@ -22,12 +22,8 @@ from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet, CommentViewSet
 from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, MpLogin, WbLogin
-# from danmu.views import DanmuViewSet, JinyanViewSet, DMCountViewSet
-from jinghua.views import DakaListViewSet, JHCountViewSet
-from liv2d.views import MusicListViewSet, SentenceListViewSet
-from photos.views import PhotoListViewSet
 from sensor.views import SensorViewSet
-from ssz.views import BiliViewSet,QmViewSet
+# from ssz.views import BiliViewSet, QmViewSet
 
 router = SimpleRouter()
 router.register('artical', ArticleListViewSet, base_name='artical'),
@@ -35,17 +31,9 @@ router.register('send_code', SMSCodeViewSet, base_name='send_code'),
 router.register('user', UserViewSet, base_name='user'),
 router.register('comment', CommentViewSet, base_name='comment'),
 router.register('oauthbind', OauthBindViewSet, base_name='oauthbind'),
-# router.register('danmu', DanmuViewSet, base_name='danmu'),
-# router.register('jinyan', JinyanViewSet, base_name='jinyan'),
-# router.register('danmu_analysis', DMCountViewSet, base_name='danmu_analysis'),
-router.register('jinghua', DakaListViewSet, base_name='jinghua'),
-router.register('jinghua_analysis', JHCountViewSet, base_name='jinghua_analysis'),
-router.register('music', MusicListViewSet, base_name='music'),
-router.register('sentence', SentenceListViewSet, base_name='sentence'),
-router.register('photos', PhotoListViewSet, base_name='photos'),
 router.register('sensor', SensorViewSet, base_name='sensor'),
-router.register('bilicount', BiliViewSet, base_name='bilicount'),
-router.register('qmcount', QmViewSet, base_name='qmcount'),
+# router.register('bilicount', BiliViewSet, base_name='bilicount'),
+# router.register('qmcount', QmViewSet, base_name='qmcount'),
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
@@ -55,7 +43,6 @@ urlpatterns = [
     path('docs/', include_docs_urls(title='梦落无声')),
     path('web/login', obtain_jwt_token),  # JWT认证
     path('web/qqlogin', QqLogin.as_view()),
-    # path('web/mplogin', MpLogin.as_view())
     path('web/wblogin', WbLogin.as_view()),
 ]
 
