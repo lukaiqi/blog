@@ -4,8 +4,8 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from .models import BiliBiliInfo,BiliBiliVideoList, QQMusic
-from .serializers import BiliBiliSerializer, QQMusicSerializer
+from .models import Videolist, UserInfo
+from .serializers import VideoListSerializer, UserInfoSerializer
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -18,23 +18,23 @@ class StandardResultsSetPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class BiliViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+class VideoListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     哔哩哔哩投稿视频列表
     """
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
-    serializer_class = BiliBiliSerializer
-    queryset = BiliBiliVideoList.objects.all()
+    serializer_class = VideoListSerializer
+    queryset = Videolist.objects.all()
     pagination_class = StandardResultsSetPagination
 
 
-class QmViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+class UserInfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
-    qq音乐歌曲列表
+    哔哩哔哩播放信息
     """
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
-    serializer_class = QQMusicSerializer
-    queryset = QQMusic.objects.all()
+    serializer_class = UserInfoSerializer
+    queryset = UserInfo.objects.all()
     pagination_class = StandardResultsSetPagination

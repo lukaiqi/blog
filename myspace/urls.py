@@ -23,7 +23,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet, CommentViewSet
 from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, MpLogin, WbLogin
 from sensor.views import SensorViewSet
-# from ssz.views import BiliViewSet, QmViewSet
+from bilibili.views import VideoListViewSet,UserInfoViewSet
 
 router = SimpleRouter()
 router.register('artical', ArticleListViewSet, base_name='artical'),
@@ -32,8 +32,8 @@ router.register('user', UserViewSet, base_name='user'),
 router.register('comment', CommentViewSet, base_name='comment'),
 router.register('oauthbind', OauthBindViewSet, base_name='oauthbind'),
 router.register('sensor', SensorViewSet, base_name='sensor'),
-# router.register('bilicount', BiliViewSet, base_name='bilicount'),
-# router.register('qmcount', QmViewSet, base_name='qmcount'),
+router.register('videolist', VideoListViewSet, base_name='videolist'),
+router.register('bili_info', UserInfoViewSet, base_name='bili_info'),
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),

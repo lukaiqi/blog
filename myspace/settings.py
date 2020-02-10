@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'users',
     'article',
     'sensor',
-    # 'ssz',
+    'bilibili',
     'rest_framework.authtoken'
 ]
 
