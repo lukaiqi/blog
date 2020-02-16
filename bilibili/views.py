@@ -12,7 +12,7 @@ class StandardResultsSetPagination(PageNumberPagination):
     """
     自定义分页属性
     """
-    page_size = 15
+    page_size = 10
     # page_query_param = 'p' #页码名称
     page_size_query_param = 'page_size'
     max_page_size = 100
@@ -36,5 +36,5 @@ class UserInfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
     serializer_class = UserInfoSerializer
-    queryset = UserInfo.objects.all()
+    queryset = UserInfo.objects.all().order_by('-id')
     pagination_class = StandardResultsSetPagination
