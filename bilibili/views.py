@@ -25,7 +25,7 @@ class VideoListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
     serializer_class = VideoListSerializer
-    queryset = Videolist.objects.all().order_by('-aid')
+    queryset = Videolist.objects.all().order_by('-pubtime')
     pagination_class = StandardResultsSetPagination
 
 
