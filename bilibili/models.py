@@ -12,7 +12,8 @@ class Videolist(models.Model):
     favorite = models.CharField(max_length=8, default='', verbose_name='收藏数')
     coin = models.CharField(max_length=8, default='', verbose_name='硬币数')
     share = models.CharField(max_length=8, default='', verbose_name='分享数')
-    pubtime = models.CharField(max_length=20, default='', verbose_name='发布时间')
+    url = models.CharField(max_length=30, default='', verbose_name='视频地址')
+    pub_time = models.CharField(max_length=20, default='', verbose_name='发布时间')
 
     class Meta:
         verbose_name = '投稿'
