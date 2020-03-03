@@ -38,3 +38,4 @@ class UserInfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = UserInfoSerializer
     queryset = UserInfo.objects.all().order_by('-id')
     pagination_class = StandardResultsSetPagination
+

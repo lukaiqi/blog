@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'article',
     'sensor',
     'bilibili',
+    'client',
     'rest_framework.authtoken'
 ]
 
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'utils.clientip.ClientIpMiddleware'
 ]
 
 ROOT_URLCONF = 'myspace.urls'

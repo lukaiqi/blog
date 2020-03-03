@@ -24,6 +24,7 @@ from article.views import ArticleListViewSet, CommentViewSet
 from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, MpLogin, WbLogin
 from sensor.views import SensorViewSet
 from bilibili.views import VideoListViewSet,UserInfoViewSet
+from client.views import ClientViewSet
 
 router = SimpleRouter()
 router.register('artical', ArticleListViewSet, base_name='artical'),
@@ -34,6 +35,7 @@ router.register('oauthbind', OauthBindViewSet, base_name='oauthbind'),
 router.register('sensor', SensorViewSet, base_name='sensor'),
 router.register('videolist', VideoListViewSet, base_name='videolist'),
 router.register('bili_info', UserInfoViewSet, base_name='bili_info'),
+router.register('clientip', ClientViewSet, base_name='clientip')
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
