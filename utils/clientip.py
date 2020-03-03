@@ -12,6 +12,20 @@ class ClientIpMiddleware(MiddlewareMixin):
             ip = request.META['HTTP_X_FORWARDED_FOR']
         else:
             ip = request.META['REMOTE_ADDR']
+        # 获取请求头
+        user_agent = request.META['HTTP_USER_AGENT']
+        # 判断是否有useragent
+        if user_agent:
+            if 'Android' in user_agent:
+                plantform = 'Android'
+            if 'iPhone' in user_agent:
+                plantform = 'iPhone '
+            if 'Mac' in user_agent:
+                plantform = 'Mac'
+            if 'Windows' in user_agent:
+                plantform = 'Windows'
+        else:
+            plantform = 'other'
         # 通过ip定位
         try:
             headers = {
@@ -27,14 +41,15 @@ class ClientIpMiddleware(MiddlewareMixin):
 
         except Exception as e:
             addr = '获取失败'
+            isp_name = '获取失败'
         # 获取访问路径
         path = request.path_info
-
         if 'xadmin' not in path:
             client = Client()
             client.ip = ip
             client.path = path
             client.addr = addr
             client.isp_name = isp_name
+            client.plantform = plantform
             client.save()
         return None
