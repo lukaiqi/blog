@@ -91,7 +91,7 @@ DATABASES = {
         'NAME': 'space',
         'USER': 'root',
         'PASSWORD': '81C3B080DAD537DE7E10E0987A4BF52E',
-        'HOST': '47.106.69.171',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4'}
     }
