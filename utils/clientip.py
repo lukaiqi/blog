@@ -18,14 +18,18 @@ class ClientIpMiddleware(MiddlewareMixin):
         if user_agent:
             if 'Android' in user_agent:
                 plantform = 'Android'
-            if 'iPhone' in user_agent:
+            elif 'iPhone' in user_agent:
                 plantform = 'iPhone '
-            if 'Mac' in user_agent:
+            elif 'Mac' in user_agent:
                 plantform = 'Mac'
-            if 'Windows' in user_agent:
+            elif 'Windows' in user_agent:
                 plantform = 'Windows'
+            elif 'okhttp' in user_agent:
+                plantform = 'Android'
+            else:
+                plantform = 'other'
         else:
-            plantform = 'other'
+            plantform = 'None'
         # 通过ip定位
         try:
             headers = {
