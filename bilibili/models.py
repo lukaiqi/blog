@@ -3,7 +3,7 @@ from django.db import models
 
 # B站投稿视频
 class Videolist(models.Model):
-    aid = models.CharField(max_length=15, default='', verbose_name='视频id', primary_key=True)
+    aid = models.CharField(max_length=15, default='', verbose_name='视频id')
     title = models.CharField(max_length=100, default='', verbose_name='标题')
     play = models.CharField(max_length=8, default='', verbose_name='播放量')
     like_count = models.CharField(max_length=8, default='', verbose_name='点赞数')
@@ -16,7 +16,7 @@ class Videolist(models.Model):
     add_time = models.CharField(max_length=20, default='', verbose_name='查询日期')
 
     class Meta:
-        verbose_name = '视频列表'
+        verbose_name = '视频信息'
         verbose_name_plural = verbose_name
 
     def __str__(self):
