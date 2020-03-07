@@ -13,9 +13,10 @@ class Videolist(models.Model):
     coin = models.CharField(max_length=8, default='', verbose_name='硬币数')
     share = models.CharField(max_length=8, default='', verbose_name='分享数')
     pubtime = models.CharField(max_length=20, default='', verbose_name='发布时间')
+    add_time = models.CharField(max_length=20, default='', verbose_name='查询日期')
 
     class Meta:
-        verbose_name = '投稿'
+        verbose_name = '视频列表'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -31,10 +32,8 @@ class UserInfo(models.Model):
     add_time = models.CharField(max_length=20, default='', verbose_name='记录日期')
 
     class Meta:
-        verbose_name = '统计'
+        verbose_name = '基础信息'
         verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.fans
-
-
