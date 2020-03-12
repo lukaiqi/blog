@@ -48,7 +48,9 @@ class ClientIpMiddleware(MiddlewareMixin):
             isp_name = '获取失败'
         # 获取访问路径
         path = request.path_info
-        if 'xadmin' not in path:
+        if 'xadmin' or 'ckeditor' in path:
+            pass
+        else:
             client = Client()
             client.ip = ip
             client.path = path

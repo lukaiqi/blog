@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8@13*&mdcc^ltv1^!wvi1878#1qnn**4#faesp%1wmwakzn(h@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -163,6 +163,7 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    # 自定义jwt登录后的返回内容
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'users.views.jwt_response_payload_handler'
 }
 
@@ -170,10 +171,6 @@ AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
     # 'django.contrib.auth.backends.ModelBackend', 默认认证方式
 )
-# 发送短信验证码
-APP_CODE = '6b5974d1336f415ca1901fd6ef6fe95b'
-email_username = '17313134897@189.cn'
-email_password = 'Lukaiqi189.cn'
 
 # 跨域白名单
 CORS_ORIGIN_WHITELIST = [
