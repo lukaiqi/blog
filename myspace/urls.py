@@ -23,7 +23,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet, CommentViewSet
 from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, MpLogin, WbLogin
 from sensor.views import SensorViewSet
-from bilibili.views import VideoListViewSet,UserInfoViewSet
+from bilibili.views import VideoListViewSet, UserInfoViewSet
 from client.views import ClientViewSet
 
 router = SimpleRouter()
@@ -38,7 +38,7 @@ router.register('bili_info', UserInfoViewSet, base_name='bili_info'),
 router.register('clientip', ClientViewSet, base_name='clientip')
 
 urlpatterns = [
-    path('xadmin/', xadmin.site.urls),
+    path('', xadmin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('web/', include(router.urls)),
     path('ckeditor/', include('ckeditor_uploader.urls')),
