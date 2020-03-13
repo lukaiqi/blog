@@ -38,7 +38,7 @@ router.register('bili_info', UserInfoViewSet, base_name='bili_info'),
 router.register('clientip', ClientViewSet, base_name='clientip')
 
 urlpatterns = [
-    path('', xadmin.site.urls),
+    path('xadmin', xadmin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('web/', include(router.urls)),
     path('ckeditor/', include('ckeditor_uploader.urls')),
