@@ -27,8 +27,12 @@ class VideoListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
     # 获取查询日期，默认返回当前日期数据
     def get_queryset(self):
-        date = self.request.query_params['date']
-        return Videolist.objects.filter(add_time=date or time.strftime('%Y-%m-%d')).order_by('-pubtime')
+        try:
+            date = self.request.query_params['date']
+        except:
+            date = time.strftime('%Y-%m-%d')
+        return Videolist.objects.filter(add_time=date).order_by('-pubtime')
+
     # 认证方式
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
