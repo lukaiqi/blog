@@ -3,7 +3,7 @@ from .models import Client
 
 
 class ClientAdmin(object):
-    list_display = ['ip', 'path', 'addr', 'isp_name', 'plantform', 'add_time']
+    list_display = ['ip', 'country', 'city', 'area', 'isp', 'user_agent', 'path', 'add_time']
 
 
 xadmin.site.register(Client, ClientAdmin)
