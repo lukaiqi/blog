@@ -19,7 +19,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 class ClientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
-    哔哩哔哩投稿视频列表
+    访客信息列表
     """
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)

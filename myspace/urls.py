@@ -46,6 +46,7 @@ urlpatterns = [
     path('web/login', obtain_jwt_token),  # JWT认证
     path('web/qqlogin', QqLogin.as_view()),
     path('web/wblogin', WbLogin.as_view()),
+    path('web/mplogin', MpLogin.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
