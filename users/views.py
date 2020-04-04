@@ -116,7 +116,7 @@ class OauthBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
 class QqLogin(APIView):
     """
-    获取用户信息
+    获取QQ用户信息
     """
 
     def get(self, request):
@@ -148,7 +148,7 @@ class QqLogin(APIView):
 
 class MpLogin(APIView):
     """
-    获取用户信息
+    获取微信的openid
     """
 
     def get(self, request):
@@ -167,14 +167,14 @@ class MpLogin(APIView):
             })
         except:
             return Response({
-                'flag': '0',
+                'code': '0',
                 'openid': openid
             })
 
 
 class WbLogin(APIView):
     """
-    获取用户信息
+    获取微博用户信息
     """
 
     def get(self, request):

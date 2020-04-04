@@ -19,12 +19,7 @@ class MPOauth(object):
         }
         response = requests.get(url, payload)
         result = json.loads(response.text)
-        print(result)
         openid = result['openid']
-        # try:
-        #     openid = result['openid']
-        # except:
-        #     openid = ''
         return openid
 
 
