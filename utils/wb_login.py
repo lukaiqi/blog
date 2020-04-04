@@ -4,7 +4,7 @@ import requests
 class WBOauth(object):
     def __init__(self):
         self.client_id = '4253417427'
-        self.redirect_url = 'https://ishuangsheng.cn/user_login?from=weibo'
+        self.redirect_url = 'https://ishuangsheng.cn/web/user_login?from=weibo'
         self.info_url = 'https://api.weibo.com/2/users/show.json'
         self.access_token_url = 'https://api.weibo.com/oauth2/access_token'
         self.client_secret = '7be8d23b22773083a7c495a5189b7e52'
