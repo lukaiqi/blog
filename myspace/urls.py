@@ -38,11 +38,11 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('docs/', include_docs_urls(title='梦落无声')),
-    path('login', obtain_jwt_token),  # JWT认证
-    path('qqlogin', QqLogin.as_view()),
-    path('wblogin', WbLogin.as_view()),
-    path('mplogin', MpLogin.as_view()),
-    path('getinfo', GetInfo.as_view()),
+    path('api/login', obtain_jwt_token),  # JWT认证
+    path('api/qqlogin', QqLogin.as_view()),
+    path('api/wblogin', WbLogin.as_view()),
+    path('api/mplogin', MpLogin.as_view()),
+    path('api/getinfo', GetInfo.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

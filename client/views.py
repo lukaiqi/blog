@@ -11,15 +11,6 @@ from .models import Client
 from .serializers import ClientSerializer
 
 
-class StandardResultsSetPagination(PageNumberPagination):
-    """
-    自定义分页属性
-    """
-    page_size = 15
-    page_size_query_param = 'page_size'
-    max_page_size = 100
-
-
 class ClientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     访客信息列表
@@ -28,7 +19,6 @@ class ClientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ClientSerializer
     queryset = Client.objects.all().order_by('-id')
-    pagination_class = StandardResultsSetPagination
 
 
 class GetInfo(APIView):

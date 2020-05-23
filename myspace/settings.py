@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'django_filters',
-    'corsheaders',
+    # 'corsheaders',
     'ckeditor',
     'ckeditor_uploader',
     'users',
@@ -53,7 +53,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -156,7 +156,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20
 }
 
 JWT_AUTH = {
@@ -171,6 +173,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # 跨域白名单
-CORS_ORIGIN_WHITELIST = [
-    "ishuangsheng.cn"
-]
+# CORS_ORIGIN_WHITELIST = [
+#     "*"
+# ]
+# CORS_ORIGIN_ALLOW_ALL = True

@@ -9,15 +9,6 @@ from .serializers import ArticleSerializer, CommentListSerializer, CommentAddSer
 from .filters import CommentFilter
 
 
-class StandardResultsSetPagination(PageNumberPagination):
-    """
-    自定义分页属性
-    """
-    page_size = 15
-    page_size_query_param = 'page_size'
-    max_page_size = 100
-
-
 class ArticleListViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin,
                          viewsets.GenericViewSet):
     """
@@ -30,7 +21,6 @@ class ArticleListViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.
     """
     queryset = Article.objects.all().order_by('-id')
     serializer_class = ArticleSerializer
-    pagination_class = StandardResultsSetPagination  # 分页
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)  # 过滤，搜索，排序
     search_fields = ('title', 'content')  # 搜索
     ordering_fields = ('add_time',)  # 排序
@@ -45,7 +35,6 @@ class CommentViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.Ge
     """
 
     queryset = Comment.objects.all().order_by('-add_time')
-    pagination_class = StandardResultsSetPagination  # 分页
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend,)
     filter_class = CommentFilter
