@@ -216,3 +216,12 @@ def jwt_response_payload_handler(token, user=None, request=None):
         'token': token,
         'user': UserDetailSerializer(user, context={'request': request}).data
     }
+
+
+def mpnotice(APIView):
+    def get(self, request):
+        print(self, request)
+        return ''
+    def post(self, request):
+        print(self, request)
+        return ''

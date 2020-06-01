@@ -34,10 +34,16 @@ class CommentViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.Ge
     新建评论
     """
 
-    queryset = Comment.objects.all().order_by('-add_time')
+    # queryset = Comment.objects.all().order_by('-add_time')
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend,)
     filter_class = CommentFilter
+
+    def get_queryset(self):
+        id = self.args[0]
+        blog = Article.objects.get(id=id)
+        queryset = blog.article.all().order_by('-add_time')
+        return queryset
 
     def get_serializer_class(self):
         if self.action == 'create':

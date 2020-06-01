@@ -34,7 +34,7 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
-    pid = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='文章')
+    pid = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='文章id', related_name='article')
     content = models.TextField(default='', verbose_name='评论内容')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='评论用户')
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')

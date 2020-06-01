@@ -21,14 +21,14 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet, CommentViewSet
-from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, MpLogin, WbLogin
+from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, MpLogin, WbLogin,mpnotice
 from client.views import ClientViewSet, GetInfo
 
 router = SimpleRouter()
-router.register('artical', ArticleListViewSet, base_name='artical'),
+router.register('article', ArticleListViewSet, base_name='artical'),
 router.register('send_code', SMSCodeViewSet, base_name='send_code'),
 router.register('user', UserViewSet, base_name='user'),
-router.register('comment', CommentViewSet, base_name='comment'),
+router.register('comment/(\d+)', CommentViewSet, base_name='comment'),
 router.register('oauthbind', OauthBindViewSet, base_name='oauthbind'),
 router.register('clientip', ClientViewSet, base_name='clientip')
 
@@ -43,6 +43,7 @@ urlpatterns = [
     path('api/wblogin', WbLogin.as_view()),
     path('api/mplogin', MpLogin.as_view()),
     path('api/getinfo', GetInfo.as_view()),
+    path('mpnotice', mpnotice().as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
