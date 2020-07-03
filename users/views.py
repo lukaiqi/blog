@@ -14,7 +14,6 @@ from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
 from utils.qq_login import QQOauth
-from utils.mp_login import MPOauth
 from utils.wb_login import WBOauth
 from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer, OAuthSerializer
 from utils.sendcode import Mail
@@ -144,32 +143,6 @@ class QqLogin(APIView):
             })
         except:
             return Response({'userinfo': json.loads(userinfo), 'code': '0', 'openid': openid})
-
-
-class MpLogin(APIView):
-    """
-    获取微信的openid
-    """
-
-    def get(self, request):
-        mp = MPOauth()
-        code = request.query_params.get('code')
-        openid = mp.get_openid(code)
-        try:
-            user = User.objects.get(openid=openid)
-            user.last_login = datetime.now()
-            user.save()
-            payload = jwt_payload_handler(user)
-            token = jwt_encode_handler(payload)
-            return Response({
-                'token': token,
-                'flag': '1'
-            })
-        except:
-            return Response({
-                'code': '0',
-                'openid': openid
-            })
 
 
 class WbLogin(APIView):

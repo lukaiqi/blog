@@ -21,8 +21,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet, CommentViewSet
-from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, MpLogin, WbLogin
-from client.views import ClientViewSet, GetInfo
+from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, WbLogin
 
 router = SimpleRouter()
 router.register('article', ArticleListViewSet, basename='article'),
@@ -30,7 +29,6 @@ router.register('send_code', SMSCodeViewSet, basename='send_code'),
 router.register('user', UserViewSet, basename='user'),
 router.register('comment/(\d+)', CommentViewSet, basename='comment'),
 router.register('oauthbind', OauthBindViewSet, basename='oauthbind'),
-router.register('clientip', ClientViewSet, basename='clientip')
 
 urlpatterns = [
     path('', xadmin.site.urls),
@@ -39,9 +37,7 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('api/login', obtain_jwt_token),  # JWT认证
     path('api/qqlogin', QqLogin.as_view()),
-    path('api/wblogin', WbLogin.as_view()),
-    path('api/mplogin', MpLogin.as_view()),
-    path('api/getinfo', GetInfo.as_view())
+    path('api/wblogin', WbLogin.as_view())
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

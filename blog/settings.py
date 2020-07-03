@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '83)q*1t*kbvjtw=k+1t@@_l18m58nodo)s&ul&uvge6k(i-5p7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 AUTH_USER_MODEL = 'users.UserProfile'
 ALLOWED_HOSTS = ['*']
 
@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'users',
     'article',
-    'client',
     'rest_framework.authtoken'
 ]
 
@@ -57,7 +56,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'utils.clientip.ClientIpMiddleware'
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -90,7 +88,7 @@ DATABASES = {
         'NAME': 'space',
         'USER': 'root',
         'PASSWORD': 'shuangshengzi',
-        'HOST': '47.106.69.171',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4'}
     }
