@@ -40,12 +40,13 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
     'ckeditor',
     'ckeditor_uploader',
     'users',
     'article',
-    'rest_framework.authtoken'
+    'client'
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'client.views.ClientIpMiddleware'
 ]
 
 ROOT_URLCONF = 'blog.urls'

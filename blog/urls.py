@@ -22,13 +22,14 @@ from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleListViewSet, CommentViewSet
 from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, WbLogin
-
+from client.views import ClientViewSet
 router = SimpleRouter()
 router.register('article', ArticleListViewSet, basename='article'),
 router.register('send_code', SMSCodeViewSet, basename='send_code'),
 router.register('user', UserViewSet, basename='user'),
 router.register('comment/(\d+)', CommentViewSet, basename='comment'),
 router.register('oauthbind', OauthBindViewSet, basename='oauthbind'),
+router.register('client', ClientViewSet, basename='client'),
 
 urlpatterns = [
     path('', xadmin.site.urls),
