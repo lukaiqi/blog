@@ -5,6 +5,7 @@ from .models import Article, ArticleType, Comment
 class ArticleAdmin(object):
     list_display = ['title', 'type', 'desc', 'add_time']
     search_fields = ['title', 'content']
+    list_filter = ['type']
     list_editable = ["type"]
 
 
