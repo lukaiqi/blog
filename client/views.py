@@ -48,6 +48,7 @@ class ClientIpMiddleware(MiddlewareMixin):
                 client = Client()
                 res = requests.get('http://ip.yqie.com/ip.aspx?ip={}'.format(ip))
                 addr = re.search('id="AddressInfo".*value="(.*?)".*?', res.text)
+                client.ip = ip
                 client.addr = addr.group(1)
                 client.path = path
                 client.user_agent = ua
