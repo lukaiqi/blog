@@ -153,6 +153,11 @@ CKEDITOR_CONFIGS = {
 }
 
 REST_FRAMEWORK = {
+    # API配置，JSONRenderer返回json，BrowsableAPIRenderer返回html
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20
 }
