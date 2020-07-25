@@ -1,4 +1,5 @@
 import json
+import os
 from urllib.parse import parse_qs
 
 import requests
@@ -6,8 +7,8 @@ import requests
 
 class QQOauth(object):
     def __init__(self):
-        self.appid = '101772638'
-        self.client_secret = '0f138d861e33982754deb1882880133a'
+        self.appid = os.environ['QQ_APPID']
+        self.client_secret = os.environ['QQ_SECRET']
         self.redirect_uri = 'https://ishuangsheng.cn/web/user_login?from=qq'
         self.info_url = 'https://graph.qq.com/user/get_user_info'
         self.open_id_url = 'https://graph.qq.com/oauth2.0/me'

@@ -89,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'space',
         'USER': 'root',
-        'PASSWORD': 'shuangshengzi',
+        'PASSWORD': os.environ['MYSQL_PWD'],
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4'}
@@ -153,7 +153,7 @@ CKEDITOR_CONFIGS = {
 }
 
 REST_FRAMEWORK = {
-    'REST_FRAMEWORK': [
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication'

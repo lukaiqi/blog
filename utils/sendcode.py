@@ -1,3 +1,4 @@
+import os
 import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
@@ -6,8 +7,8 @@ from email.utils import formataddr
 class Mail(object):
     def __init__(self):
         # 邮件相关
-        self.my_sender = '17313134897'  # 发件人邮箱账号
-        self.my_pass = 'Lukaiqi189.cn'  # 发件人邮箱密码
+        self.my_sender = '17313134897@189.cn'  # 发件人邮箱账号
+        self.my_pass = os.environ['EMAIL_PWD']  # 发件人邮箱密码
 
     def send(self, address, message):
         msg = MIMEText(str(message))
