@@ -24,7 +24,7 @@ class ClientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 class ClientIpMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
-        if request.user.username == 'admin':
+        if request.user.is_staff:
             pass
         else:
             # 获取客户端IP

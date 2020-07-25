@@ -10,7 +10,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = ('id', 'type', 'title', 'desc')
 
     def get_type(self, obj):
         return obj.type.name
@@ -41,3 +41,18 @@ class CommentListSerializer(serializers.ModelSerializer):
 
     def get_user(self, obj):
         return obj.user.nickname
+
+
+class ArticleDetailSerializer(serializers.ModelSerializer):
+    type = serializers.SerializerMethodField()
+    comments = CommentListSerializer(many=True)
+    """
+    文章列表序列化
+    """
+
+    class Meta:
+        model = Article
+        fields = '__all__'
+
+    def get_type(self, obj):
+        return obj.type.name

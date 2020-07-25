@@ -22,6 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '83)q*1t*kbvjtw=k+1t@@_l18m58nodo)s&ul&uvge6k(i-5p7'
+SECRET_KEY = os.environ['BLOG_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -87,7 +88,7 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'space',
+        'NAME': 'blog',
         'USER': 'root',
         'PASSWORD': os.environ['MYSQL_PWD'],
         'HOST': '127.0.0.1',

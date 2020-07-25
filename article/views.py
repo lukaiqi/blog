@@ -1,15 +1,14 @@
 from rest_framework import mixins, viewsets, filters
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from .models import Article, Comment
-from .serializers import ArticleSerializer, CommentListSerializer, CommentAddSerializer
+from .models import Article
+from .serializers import ArticleSerializer, ArticleDetailSerializer, CommentAddSerializer
 from .filters import CommentFilter
 
 
-class ArticleListViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin,
+class ArticleListViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                          viewsets.GenericViewSet):
     """
     list:
@@ -20,42 +19,26 @@ class ArticleListViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.
     显示文章详情
     """
     queryset = Article.objects.all().order_by('-id')
-    serializer_class = ArticleSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)  # 过滤，搜索，排序
     search_fields = ('title', 'content')  # 搜索
     ordering_fields = ('add_time',)  # 排序
 
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return ArticleDetailSerializer
+        elif self.action == 'list':
+            return ArticleSerializer
+        else:
+            return ArticleSerializer
 
-class CommentViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+
+class CommentViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
-    list:
-    显示评论列表
-    creat:
     新建评论
     """
 
-    # queryset = Comment.objects.all().order_by('-add_time')
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
     filter_backends = (DjangoFilterBackend,)
     filter_class = CommentFilter
-
-    def get_queryset(self):
-        id = self.args[0]
-        blog = Article.objects.get(id=id)
-        queryset = blog.article.all().order_by('-add_time')
-        return queryset
-
-    def get_serializer_class(self):
-        if self.action == 'create':
-            return CommentAddSerializer
-        elif self.action == 'list':
-            return CommentListSerializer
-
-        return CommentListSerializer
-
-    def get_permissions(self):
-        if self.action == 'create':
-            return [IsAuthenticated()]
-        elif self.action == 'list':
-            return []
-        return []
+    serializer_class = CommentAddSerializer

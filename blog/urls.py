@@ -32,7 +32,6 @@ router.register('oauthbind', OauthBindViewSet, basename='oauthbind'),
 router.register('client', ClientViewSet, basename='client'),
 
 urlpatterns = [
-    path('', xadmin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
     path('ckeditor/', include('ckeditor_uploader.urls')),
