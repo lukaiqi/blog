@@ -1,11 +1,13 @@
 import random
 import string
 import json
+from collections import OrderedDict
 from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from rest_framework import viewsets, status
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -60,6 +62,20 @@ class CodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             return Response({'msg': '发送失败'})
 
 
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'size'
+    max_page_size = 50
+
+    def get_paginated_response(self, data):
+        return Response(OrderedDict([
+            ('count', self.page.paginator.count),
+            ('current', self.page.number),
+            ('size', self.page.paginator.per_page),
+            ('results', data)
+        ]))
+
+
 class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     list:
@@ -72,6 +88,7 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
     serializer_class = UserRegSerializer
     queryset = User.objects.all()
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    pagination_class = StandardResultsSetPagination
 
     def get_serializer_class(self):
         if self.action == 'list':

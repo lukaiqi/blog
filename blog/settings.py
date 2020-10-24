@@ -25,7 +25,7 @@ SECRET_KEY = os.environ['BLOG_SECRET_KEY']
 # SECRET_KEY = '83)q*1t*kbvjtw=k+1t@@_l18m58nodo)s&ul&uvge6k(i-5p7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 AUTH_USER_MODEL = 'users.UserProfile'
 ALLOWED_HOSTS = ['*']
 
@@ -159,8 +159,6 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20
 }
 
 JWT_AUTH = {

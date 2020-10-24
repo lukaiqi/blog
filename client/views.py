@@ -1,14 +1,32 @@
+from collections import OrderedDict
+
 import requests
 import re
 
 from django.utils.deprecation import MiddlewareMixin
 from rest_framework import mixins, viewsets
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Client
 from .serializers import ClientSerializer
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'size'
+    max_page_size = 50
+
+    def get_paginated_response(self, data):
+        return Response(OrderedDict([
+            ('count', self.page.paginator.count),
+            ('current', self.page.number),
+            ('size', self.page.paginator.per_page),
+            ('results', data)
+        ]))
 
 
 class ClientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -19,6 +37,7 @@ class ClientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ClientSerializer
     queryset = Client.objects.all().order_by('-id')
+    pagination_class = StandardResultsSetPagination
 
 
 class ClientIpMiddleware(MiddlewareMixin):
