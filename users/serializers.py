@@ -33,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'username', 'nickname', 'email', 'gender', 'date_joined','last_login']
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
@@ -69,15 +69,14 @@ class UserRegSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = super(UserRegSerializer, self).create(validated_data=validated_data)
         user.set_password(validated_data['password'])
+        user.last_login = datetime.now()
         user.save()
         return user
 
     def validate_code(self, code):
-        print(self.initial_data['username'])
         verify_records = VerifyCode.objects.filter(
             email=self.initial_data['username']).order_by('-add_time')
         five_min_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
-        print(verify_records)
         if verify_records:
             last_record = verify_records[0]
             print(last_record)

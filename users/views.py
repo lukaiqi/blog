@@ -76,7 +76,8 @@ class StandardResultsSetPagination(PageNumberPagination):
         ]))
 
 
-class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class UserViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin,
+                  viewsets.GenericViewSet):
     """
     list:
     获取用户列表

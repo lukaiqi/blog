@@ -22,7 +22,8 @@ from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleViewSet, ArticleTypeViewSet
 from users.views import UserViewSet, CodeViewSet, QQLogin, OauthBindViewSet, WbLogin
 from client.views import ClientViewSet
-router = SimpleRouter()
+
+router = SimpleRouter(trailing_slash=False)
 router.register('article', ArticleViewSet, basename='article'),
 router.register('articleType', ArticleTypeViewSet, basename='articleType'),
 router.register('sendCode', CodeViewSet, basename='sendCode'),
