@@ -3,18 +3,24 @@ from rest_framework.authentication import SessionAuthentication
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from .models import Article
-from .serializers import ArticleSerializer, ArticleDetailSerializer, CommentAddSerializer
+from .models import Article, ArticleType
+from .serializers import ArticleSerializer, ArticleTypeSerializer, ArticleDetailSerializer, CommentAddSerializer
 from .filters import CommentFilter
 
 
-class ArticleListViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
-                         viewsets.GenericViewSet):
+class ArticleTypeViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = ArticleType.objects.all()
+    serializer_class = ArticleTypeSerializer
+
+
+class ArticleViewSet(viewsets.ModelViewSet):
     """
     list:
     显示文章列表
     creat:
     新建文章
+    update:
+    更新
     retrieve:
     显示文章详情
     """

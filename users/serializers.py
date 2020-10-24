@@ -26,6 +26,16 @@ class CodeSerializer(serializers.Serializer):
         return email
 
 
+class UserSerializer(serializers.ModelSerializer):
+    """
+    用户列表
+    """
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
 class UserDetailSerializer(serializers.ModelSerializer):
     """
     用户详情

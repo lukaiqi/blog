@@ -2,6 +2,12 @@ from rest_framework import serializers
 from .models import Article, ArticleType, Comment
 
 
+class ArticleTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArticleType
+        fields = '__all_'
+
+
 class ArticleSerializer(serializers.ModelSerializer):
     type = serializers.SerializerMethodField()
     """
@@ -10,10 +16,20 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ('id', 'type', 'title', 'desc')
+        fields = '__all__'
 
     def get_type(self, obj):
         return obj.type.name
+
+
+class ArticleCreateSerialize(serializers.ModelSerializer):
+    """
+    创建文章
+    """
+
+    class Meta:
+        model = Article
+        fields = '__all__'
 
 
 class CommentAddSerializer(serializers.ModelSerializer):

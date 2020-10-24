@@ -13,22 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import SimpleRouter
 import xadmin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
-from article.views import ArticleListViewSet, CommentViewSet
-from users.views import UserViewSet, SMSCodeViewSet, QqLogin, OauthBindViewSet, WbLogin
+from article.views import ArticleViewSet, ArticleTypeViewSet
+from users.views import UserViewSet, CodeViewSet, QQLogin, OauthBindViewSet, WbLogin
 from client.views import ClientViewSet
 router = SimpleRouter()
-router.register('article', ArticleListViewSet, basename='article'),
-router.register('send_code', SMSCodeViewSet, basename='send_code'),
+router.register('article', ArticleViewSet, basename='article'),
+router.register('articleType', ArticleTypeViewSet, basename='articleType'),
+router.register('sendCode', CodeViewSet, basename='sendCode'),
 router.register('user', UserViewSet, basename='user'),
-router.register('comment/(\d+)', CommentViewSet, basename='comment'),
-router.register('oauthbind', OauthBindViewSet, basename='oauthbind'),
+router.register('oauthBind', OauthBindViewSet, basename='oauthBind'),
 router.register('client', ClientViewSet, basename='client'),
 
 urlpatterns = [
@@ -37,7 +36,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('api/login', obtain_jwt_token),  # JWT认证
-    path('api/qqlogin', QqLogin.as_view()),
+    path('api/qqlogin', QQLogin.as_view()),
     path('api/wblogin', WbLogin.as_view())
 ]
 

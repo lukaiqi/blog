@@ -8,14 +8,14 @@ from django.db.models import Q
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework import mixins
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
 from utils.qq_login import QQOauth
 from utils.wb_login import WBOauth
-from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer, OAuthSerializer
+from .serializers import CodeSerializer, UserRegSerializer, UserDetailSerializer, OAuthSerializer, UserSerializer
 from utils.sendcode import Mail
 from .models import VerifyCode
 
@@ -37,7 +37,7 @@ class CustomBackend(ModelBackend):
             return None
 
 
-class SMSCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class CodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
     create:
     发送验证码
@@ -62,6 +62,8 @@ class SMSCodeViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
 class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
+    list:
+    获取用户列表
     create:
     创建用户
     retrieve:
@@ -72,6 +74,8 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
     def get_serializer_class(self):
+        if self.action == 'list':
+            return UserSerializer
         if self.action == 'retrieve':
             return UserDetailSerializer
         elif self.action == 'create':
@@ -79,6 +83,8 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
         return UserDetailSerializer
 
     def get_permissions(self):
+        if self.action == 'list':
+            return [IsAdminUser()]
         if self.action == 'retrieve':
             return [IsAuthenticated()]
         elif self.action == 'creat':
@@ -113,7 +119,7 @@ class OauthBindViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         return serializer.save()
 
 
-class QqLogin(APIView):
+class QQLogin(APIView):
     """
     获取QQ用户信息
     """

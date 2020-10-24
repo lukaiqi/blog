@@ -23,7 +23,8 @@ class Article(models.Model):
     type = models.ForeignKey(ArticleType, on_delete=models.CASCADE, verbose_name='文章分类')
     desc = models.TextField(default='', verbose_name='概述')
     content = RichTextUploadingField()
-    add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
+    add_time = models.DateTimeField(auto_now_add=True, verbose_name='添加时间')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='修改时间')
 
     class Meta:
         verbose_name = '列表'
@@ -37,7 +38,7 @@ class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='文章id', related_name='comments')
     content = models.TextField(default='', verbose_name='评论内容')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='评论用户')
-    add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
+    add_time = models.DateTimeField(auto_now_add=True, verbose_name='添加时间')
 
     class Meta:
         verbose_name = '评论'
