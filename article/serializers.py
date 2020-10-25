@@ -5,7 +5,7 @@ from .models import Article, ArticleType, Comment
 class ArticleTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArticleType
-        fields = '__all_'
+        fields = '__all__'
 
 
 class ArticleSerializer(serializers.ModelSerializer):
