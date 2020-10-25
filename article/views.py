@@ -48,6 +48,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     search_fields = ('title', 'content')  # 搜索
     ordering_fields = ('add_time',)  # 排序
     pagination_class = StandardResultsSetPagination
+    authentication_classes = [JSONWebTokenAuthentication, SessionAuthentication]
 
     def get_serializer_class(self):
 
@@ -57,16 +58,15 @@ class ArticleViewSet(viewsets.ModelViewSet):
             return ArticleCreateSerialize
         elif self.action == 'retrieve':
             return ArticleDetailSerializer
-        else:
-            return ArticleSerializer
+        return ArticleSerializer
 
     def get_permissions(self):
         if self.action == 'create':
             return [IsAdminUser()]
         elif self.action == 'put':
             return [IsAdminUser()]
-        else:
-            return []
+
+        return []
 
 
 class CommentViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
