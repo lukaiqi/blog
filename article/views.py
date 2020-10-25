@@ -1,13 +1,15 @@
 from future.backports import OrderedDict
 from rest_framework import mixins, viewsets, filters
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAdminUser
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from .models import Article, ArticleType
-from .serializers import ArticleSerializer, ArticleTypeSerializer, ArticleDetailSerializer, CommentAddSerializer
+from .serializers import ArticleSerializer, ArticleCreateSerialize, ArticleTypeSerializer, ArticleDetailSerializer, \
+    CommentAddSerializer
 from .filters import CommentFilter
 
 
@@ -48,12 +50,23 @@ class ArticleViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_serializer_class(self):
-        if self.action == 'retrieve':
-            return ArticleDetailSerializer
-        elif self.action == 'list':
+
+        if self.action == 'list':
             return ArticleSerializer
+        elif self.action == 'create':
+            return ArticleCreateSerialize
+        elif self.action == 'retrieve':
+            return ArticleDetailSerializer
         else:
             return ArticleSerializer
+
+    def get_permissions(self):
+        if self.action == 'create':
+            return [IsAdminUser()]
+        elif self.action == 'put':
+            return [IsAdminUser()]
+        else:
+            return []
 
 
 class CommentViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
