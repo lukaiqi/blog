@@ -23,6 +23,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 
 class ArticleCreateSerialize(serializers.ModelSerializer):
+    id = serializers.CharField(read_only=True)
     """
     创建文章
     """
