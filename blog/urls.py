@@ -29,7 +29,7 @@ router.register('articleType', ArticleTypeViewSet, basename='articleType'),
 router.register('sendCode', CodeViewSet, basename='sendCode'),
 router.register('user', UserViewSet, basename='user'),
 router.register('oauthBind', OauthBindViewSet, basename='oauthBind'),
-router.register('client', ClientViewSet, basename='client'),
+# router.register('client', ClientViewSet, basename='client'),
 
 urlpatterns = [
     path('', xadmin.site.urls),

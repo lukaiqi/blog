@@ -47,18 +47,21 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'users',
     'article',
-    'client'
+    'corsheaders'
+    # 'client',
+    # 'weather'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'client.views.ClientIpMiddleware'
+    # 'client.views.ClientIpMiddleware'
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -90,7 +93,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
         'USER': 'root',
-        'PASSWORD': os.environ['MYSQL_PWD'],
+        # 'PASSWORD': os.environ['MYSQL_PWD'],
+        'PASSWORD': 'shuangshengzi',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4'}
@@ -171,3 +175,8 @@ AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
     # 'django.contrib.auth.backends.ModelBackend', 默认认证方式
 )
+
+
+CORS_ALLOWED_ORIGINS = [
+    "https://ishuangsheng.cn",
+]
