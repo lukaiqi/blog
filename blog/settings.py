@@ -69,8 +69,7 @@ ROOT_URLCONF = 'blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -175,7 +174,6 @@ AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
     # 'django.contrib.auth.backends.ModelBackend', 默认认证方式
 )
-
 
 CORS_ALLOWED_ORIGINS = [
     "https://ishuangsheng.cn",

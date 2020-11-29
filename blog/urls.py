@@ -21,7 +21,7 @@ from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
 from article.views import ArticleViewSet, ArticleTypeViewSet
 from users.views import UserViewSet, CodeViewSet, QQLogin, OauthBindViewSet, WbLogin
-from client.views import ClientViewSet
+# from client.views import ClientViewSet
 
 router = SimpleRouter(trailing_slash=False)
 router.register('article', ArticleViewSet, basename='article'),
